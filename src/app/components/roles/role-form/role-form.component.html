@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Rol' : 'Crear Rol' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="roleForm" class="role-dialog-form">
+    <mat-form-field>
+      <mat-label>Nombre del Rol</mat-label>
+      <input matInput formControlName="name" placeholder="Ingresa el nombre del rol">
+      <mat-error *ngIf="name?.hasError('required')">
+        El nombre del rol es requerido
+      </mat-error>
+      <mat-error *ngIf="name?.hasError('minlength')">
+        Debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="roleForm.invalid || isLoading">
+    {{ isLoading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,106 @@
+.role-form-container {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 24px;
+
+  h1 {
+    color: #1f2937;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+
+  p {
+    margin-top: 16px;
+    color: #6b7280;
+    font-size: 14px;
+  }
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 20px;
+
+  &.alert-error {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+  }
+}
+
+mat-card {
+  mat-card-content {
+    padding: 24px;
+  }
+}
+
+.role-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.checkbox-field {
+  margin: 16px 0;
+}
+
+.permissions-section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+
+  h3 {
+    color: #374151;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+  }
+}
+
+.permissions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  padding: 16px 0;
+
+  .permission-item {
+    mat-checkbox {
+      width: 100%;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .role-form-container {
+    padding: 16px;
+  }
+
+  mat-card {
+    mat-card-content {
+      padding: 16px;
+    }
+  }
+
+  .permissions-grid {
+    grid-template-columns: 1fr;
+  }
+}

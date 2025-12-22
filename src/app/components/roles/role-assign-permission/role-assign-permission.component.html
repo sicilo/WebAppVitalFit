@@ -1,0 +1,55 @@
+<div class="role-form-container">
+  <div class="page-header">
+    <h1>Asignar Permisos - {{ roleName }}</h1>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Cargando permisos...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Permissions Section -->
+  <mat-card *ngIf="!isLoading">
+    <mat-card-content>
+      <div class="permissions-section" *ngIf="permissions.length > 0">
+          <h3>Permisos</h3>
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let group of getGroupKeys()">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ group | titlecase }}
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{ getActiveCount(group) }} de {{ getGroupLength(group) }} activos
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              
+              <div class="permissions-grid">
+                <div *ngFor="let permission of permissionGroups[group]" class="permission-item">
+                  <mat-checkbox
+                    [checked]="permission.active"
+                    (change)="togglePermission(permission)">
+                    {{ getPermissionAction(permission.permissionName) | titlecase }}
+                  </mat-checkbox>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+    </mat-card-content>
+
+    <!-- Form Actions -->
+    <mat-card-actions align="end">
+      <button mat-button type="button" (click)="cancel()">Cancelar</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading">
+        Guardar Permisos
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
