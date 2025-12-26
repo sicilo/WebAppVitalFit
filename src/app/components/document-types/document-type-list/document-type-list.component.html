@@ -1,0 +1,72 @@
+<div class="document-type-list-container">
+  <div class="page-header">
+    <h1>Tipos de Documento</h1>
+    <button mat-raised-button color="primary" (click)="createDocumentType()">
+      <mat-icon>add</mat-icon> Nuevo Tipo de Documento
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Cargando tipos de documento...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Document Types Table -->
+  <div class="table-container" *ngIf="!isLoading && documentTypes.length > 0">
+    <table mat-table [dataSource]="documentTypes" class="mat-elevation-z2">
+      
+      <!-- Code Column -->
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef>Código</th>
+        <td mat-cell *matCellDef="let documentType">
+          <mat-chip color="primary" selected>{{ documentType.code }}</mat-chip>
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let documentType">{{ documentType.name }}</td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let documentType">
+          {{ documentType.description || '-' }}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let documentType">
+          <button mat-icon-button color="primary" (click)="editDocumentType(documentType)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="confirmDelete(documentType)" matTooltip="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && documentTypes.length === 0 && !errorMessage">
+    <mat-icon class="empty-icon">badge</mat-icon>
+    <p>No hay tipos de documento registrados</p>
+    <button mat-raised-button color="primary" (click)="createDocumentType()">
+      Crear primer tipo de documento
+    </button>
+  </div>
+</div>

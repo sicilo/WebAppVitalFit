@@ -7,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDividerModule } from '@angular/material/divider';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -24,6 +25,7 @@ import { ThemeService } from '../services/theme.service';
     MatListModule,
     MatIconModule,
     MatTooltipModule,
+    MatDividerModule,
     AsyncPipe,
     RouterOutlet,
     RouterLink,

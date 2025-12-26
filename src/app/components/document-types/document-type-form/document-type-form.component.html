@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Tipo de Documento' : 'Crear Tipo de Documento' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="documentTypeForm" class="document-type-dialog-form">
+    <mat-form-field>
+      <mat-label>Código</mat-label>
+      <input matInput formControlName="code" placeholder="Ej: CC, CE, PAS">
+      <mat-hint *ngIf="!isEditMode">Ingresa el código corto (2-10 caracteres)</mat-hint>
+      <mat-hint *ngIf="isEditMode">El código no se puede modificar</mat-hint>
+      <mat-error *ngIf="documentTypeForm.get('code')?.hasError('required')">
+        El código es requerido
+      </mat-error>
+      <mat-error *ngIf="documentTypeForm.get('code')?.hasError('minlength')">
+        Debe tener al menos 2 caracteres
+      </mat-error>
+      <mat-error *ngIf="documentTypeForm.get('code')?.hasError('maxlength')">
+        No debe exceder 10 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="Ej: Cédula de Ciudadanía">
+      <mat-error *ngIf="documentTypeForm.get('name')?.hasError('required')">
+        El nombre es requerido
+      </mat-error>
+      <mat-error *ngIf="documentTypeForm.get('name')?.hasError('minlength')">
+        Debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Descripción (Opcional)</mat-label>
+      <textarea matInput formControlName="description" placeholder="Describe el tipo de documento" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="documentTypeForm.invalid || isLoading">
+    {{ isLoading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+  </button>
+</mat-dialog-actions>

@@ -18,6 +18,20 @@
   mat-nav-list {
     padding-top: 8px;
 
+    h3[mat-subheader] {
+      font-size: 12px;
+      font-weight: 700;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 16px 16px 8px 16px;
+      margin: 8px 0 4px 0;
+    }
+
+    mat-divider {
+      margin: 8px 0;
+    }
+
     a[mat-list-item] {
       margin: 4px 8px;
       border-radius: 8px;
@@ -113,6 +127,14 @@ body.dark-theme {
             color: #29abe2;
           }
         }
+      }
+
+      h3[mat-subheader] {
+        color: #737373;
+      }
+
+      mat-divider {
+        border-top-color: #404040;
       }
     }
   }

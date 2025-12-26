@@ -1,0 +1,58 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Proveedor' : 'Crear Proveedor' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="providerForm" class="provider-dialog-form">
+    <mat-form-field>
+      <mat-label>Nombre *</mat-label>
+      <input matInput formControlName="name" placeholder="Nombre de la empresa o proveedor">
+      <mat-error *ngIf="providerForm.get('name')?.hasError('required')">
+        El nombre es requerido
+      </mat-error>
+      <mat-error *ngIf="providerForm.get('name')?.hasError('minlength')">
+        Debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>NIT</mat-label>
+        <input matInput formControlName="nit" placeholder="900123456-7">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Persona de Contacto</mat-label>
+        <input matInput formControlName="contactPerson" placeholder="Nombre del contacto">
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone" placeholder="300 123 4567">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="contacto@proveedor.com">
+        <mat-error *ngIf="providerForm.get('email')?.hasError('email')">
+          Email inválido
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="address" placeholder="Dirección del proveedor">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Descripción (Opcional)</mat-label>
+      <textarea matInput formControlName="description" placeholder="Información adicional sobre el proveedor" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="providerForm.invalid || isLoading">
+    {{ isLoading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+  </button>
+</mat-dialog-actions>

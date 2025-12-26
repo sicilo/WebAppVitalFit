@@ -65,6 +65,62 @@ export const routes: Routes = [
           ),
         // canActivate: [AuthGuard]
       },
+      {
+        path: 'service-categories',
+        loadComponent: () =>
+          import('./components/service-categories/service-category-list/service-category-list.component').then(
+            (m) => m.ServiceCategoryListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'document-types',
+        loadComponent: () =>
+          import('./components/document-types/document-type-list/document-type-list.component').then(
+            (m) => m.DocumentTypeListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'skin-types',
+        loadComponent: () =>
+          import('./components/skin-types/skin-type-list/skin-type-list.component').then(
+            (m) => m.SkinTypeListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'insurance-providers',
+        loadComponent: () =>
+          import('./components/insurance-providers/insurance-provider-list/insurance-provider-list.component').then(
+            (m) => m.InsuranceProviderListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'employees',
+        loadComponent: () =>
+          import('./components/employees/employee-list/employee-list.component').then(
+            (m) => m.EmployeeListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'acquisition-channels',
+        loadComponent: () =>
+          import('./components/acquisition-channels/acquisition-channel-list/acquisition-channel-list.component').then(
+            (m) => m.AcquisitionChannelListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'providers',
+        loadComponent: () =>
+          import('./components/providers/provider-list/provider-list.component').then(
+            (m) => m.ProviderListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
 
     ],
   },

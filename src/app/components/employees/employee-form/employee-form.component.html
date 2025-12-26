@@ -1,0 +1,78 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Empleado' : 'Crear Empleado / Profesional' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="employeeForm" class="employee-dialog-form">
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Nombre *</mat-label>
+        <input matInput formControlName="firstName" placeholder="Nombre">
+        <mat-error *ngIf="employeeForm.get('firstName')?.hasError('required')">
+          El nombre es requerido
+        </mat-error>
+        <mat-error *ngIf="employeeForm.get('firstName')?.hasError('minlength')">
+          Mínimo 2 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Apellido *</mat-label>
+        <input matInput formControlName="lastName" placeholder="Apellido">
+        <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">
+          El apellido es requerido
+        </mat-error>
+        <mat-error *ngIf="employeeForm.get('lastName')?.hasError('minlength')">
+          Mínimo 2 caracteres
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Tipo de Documento</mat-label>
+        <input matInput formControlName="documentType" placeholder="CC, CE, etc.">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Número de Documento</mat-label>
+        <input matInput formControlName="documentNumber" placeholder="123456789">
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Rol *</mat-label>
+      <mat-select formControlName="role" placeholder="Selecciona un rol">
+        <mat-option *ngFor="let role of roles" [value]="role.value">
+          {{ role.label }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="employeeForm.get('role')?.hasError('required')">
+        El rol es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone" placeholder="300 123 4567">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="empleado@email.com">
+        <mat-error *ngIf="employeeForm.get('email')?.hasError('email')">
+          Email inválido
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Especialización</mat-label>
+      <input matInput formControlName="specialization" placeholder="Ej: Dermatología, Tratamientos faciales">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="employeeForm.invalid || isLoading">
+    {{ isLoading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+  </button>
+</mat-dialog-actions>

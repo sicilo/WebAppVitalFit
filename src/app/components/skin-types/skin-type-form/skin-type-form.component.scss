@@ -1,0 +1,24 @@
+.skin-type-dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  textarea {
+    min-height: 80px;
+  }
+}
+
+mat-dialog-content {
+  padding: 20px 24px;
+  min-width: 500px;
+}
+
+mat-dialog-actions {
+  padding: 16px 24px;
+  gap: 8px;
+}
