@@ -21,14 +21,6 @@
   <div class="table-container" *ngIf="!isLoading && documentTypes.length > 0">
     <table mat-table [dataSource]="documentTypes" class="mat-elevation-z2">
       
-      <!-- Code Column -->
-      <ng-container matColumnDef="code">
-        <th mat-header-cell *matHeaderCellDef>Código</th>
-        <td mat-cell *matCellDef="let documentType">
-          <mat-chip color="primary" selected>{{ documentType.code }}</mat-chip>
-        </td>
-      </ng-container>
-
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Nombre</th>

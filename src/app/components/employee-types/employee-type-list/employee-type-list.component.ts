@@ -3,95 +3,92 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { IdentificationTypeService } from '../../../services/identification-type.service';
-import { IdentificationType } from '../../../interfaces/identification-type.interface';
-import { DocumentTypeFormComponent } from '../document-type-form/document-type-form.component';
+import { EmployeeTypeService } from '../../../services/employee-type.service';
+import { EmployeeType } from '../../../interfaces/employee-type.interface';
+import { EmployeeTypeFormComponent } from '../employee-type-form/employee-type-form.component';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-document-type-list',
+  selector: 'app-employee-type-list',
   standalone: true,
   imports: [
     CommonModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    MatChipsModule,
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTooltipModule
   ],
-  templateUrl: './document-type-list.component.html',
-  styleUrl: './document-type-list.component.scss'
+  templateUrl: './employee-type-list.component.html',
+  styleUrl: './employee-type-list.component.scss'
 })
-export class DocumentTypeListComponent implements OnInit {
-  private documentTypeService = inject(IdentificationTypeService);
+export class EmployeeTypeListComponent implements OnInit {
+  private employeeTypeService = inject(EmployeeTypeService);
   private dialog = inject(MatDialog);
 
-  documentTypes: IdentificationType[] = [];
+  employeeTypes: EmployeeType[] = [];
   isLoading = false;
   errorMessage = '';
   displayedColumns: string[] = ['name', 'description', 'actions'];
 
   ngOnInit(): void {
-    this.loadDocumentTypes();
+    this.loadEmployeeTypes();
   }
 
-  loadDocumentTypes(): void {
+  loadEmployeeTypes(): void {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.documentTypeService.getAll().subscribe({
+    this.employeeTypeService.getAll().subscribe({
       next: (response) => {
         this.isLoading = false;
         if (response.isSuccess) {
-          this.documentTypes = response.value;
+          this.employeeTypes = response.value;
         } else {
-          this.errorMessage = 'Error al cargar tipos de documento';
+          this.errorMessage = response.error?.message || 'Error al cargar tipos de empleado';
         }
       },
       error: (error) => {
         this.isLoading = false;
-        console.error('Error al cargar tipos de documento:', error);
-        this.errorMessage = error.error?.message || 'Error al cargar tipos de documento';
+        this.errorMessage = error.error?.message || 'Error al cargar tipos de empleado';
       }
     });
   }
 
-  createDocumentType(): void {
-    const dialogRef = this.dialog.open(DocumentTypeFormComponent, {
+  createEmployeeType(): void {
+    const dialogRef = this.dialog.open(EmployeeTypeFormComponent, {
       width: '600px',
-      data: { documentType: null }
+      data: { employeeType: null }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadDocumentTypes();
+        this.loadEmployeeTypes();
       }
     });
   }
 
-  editDocumentType(documentType: IdentificationType): void {
-    const dialogRef = this.dialog.open(DocumentTypeFormComponent, {
+  editEmployeeType(employeeType: EmployeeType): void {
+    const dialogRef = this.dialog.open(EmployeeTypeFormComponent, {
       width: '600px',
-      data: { documentType }
+      data: { employeeType }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadDocumentTypes();
+        this.loadEmployeeTypes();
       }
     });
   }
 
-  confirmDelete(documentType: IdentificationType): void {
+  confirmDelete(employeeType: EmployeeType): void {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: `¿Deseas eliminar el tipo de documento ${documentType.name}?`,
+      text: `¿Deseas eliminar el tipo de empleado ${employeeType.name}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#dc2626',
@@ -100,37 +97,37 @@ export class DocumentTypeListComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       reverseButtons: true
     }).then((result) => {
-      if (result.isConfirmed && documentType.id) {
-        this.deleteDocumentType(documentType.id);
+      if (result.isConfirmed && employeeType.id) {
+        this.deleteEmployeeType(employeeType.id);
       }
     });
   }
 
-  deleteDocumentType(documentTypeId: string): void {
-    this.documentTypeService.delete(documentTypeId).subscribe({
+  deleteEmployeeType(employeeTypeId: string): void {
+    this.employeeTypeService.delete(employeeTypeId).subscribe({
       next: (response) => {
         if (response.isSuccess) {
           Swal.fire({
             title: '¡Eliminado!',
-            text: 'El tipo de documento ha sido eliminado exitosamente',
+            text: 'El tipo de empleado ha sido eliminado exitosamente',
             icon: 'success',
             confirmButtonColor: '#10b981'
           });
-          this.loadDocumentTypes();
+          this.loadEmployeeTypes();
         } else {
           Swal.fire({
             title: 'Error',
-            text: 'No se pudo eliminar el tipo de documento',
+            text: 'No se pudo eliminar el tipo de empleado',
             icon: 'error',
             confirmButtonColor: '#dc2626'
           });
         }
       },
       error: (error) => {
-        console.error('Error al eliminar tipo de documento:', error);
+        console.error('Error al eliminar tipo de empleado:', error);
         Swal.fire({
           title: 'Error',
-          text: error.error?.message || 'No se pudo eliminar el tipo de documento',
+          text: error.error?.message || 'No se pudo eliminar el tipo de empleado',
           icon: 'error',
           confirmButtonColor: '#dc2626'
         });

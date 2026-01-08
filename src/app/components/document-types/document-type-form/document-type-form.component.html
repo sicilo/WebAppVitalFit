@@ -2,22 +2,6 @@
 <mat-dialog-content>
   <form [formGroup]="documentTypeForm" class="document-type-dialog-form">
     <mat-form-field>
-      <mat-label>Código</mat-label>
-      <input matInput formControlName="code" placeholder="Ej: CC, CE, PAS">
-      <mat-hint *ngIf="!isEditMode">Ingresa el código corto (2-10 caracteres)</mat-hint>
-      <mat-hint *ngIf="isEditMode">El código no se puede modificar</mat-hint>
-      <mat-error *ngIf="documentTypeForm.get('code')?.hasError('required')">
-        El código es requerido
-      </mat-error>
-      <mat-error *ngIf="documentTypeForm.get('code')?.hasError('minlength')">
-        Debe tener al menos 2 caracteres
-      </mat-error>
-      <mat-error *ngIf="documentTypeForm.get('code')?.hasError('maxlength')">
-        No debe exceder 10 caracteres
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="name" placeholder="Ej: Cédula de Ciudadanía">
       <mat-error *ngIf="documentTypeForm.get('name')?.hasError('required')">

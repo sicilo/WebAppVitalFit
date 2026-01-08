@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Cargo' : 'Crear Cargo' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="jobTitleForm" class="job-title-dialog-form">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="Ej: Gerente de Ventas">
+      <mat-error *ngIf="jobTitleForm.get('name')?.hasError('required')">
+        El nombre es requerido
+      </mat-error>
+      <mat-error *ngIf="jobTitleForm.get('name')?.hasError('minlength')">
+        Debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Descripción (Opcional)</mat-label>
+      <textarea matInput formControlName="description" placeholder="Describe el cargo" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="jobTitleForm.invalid || isLoading">
+    {{ isLoading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+  </button>
+</mat-dialog-actions>

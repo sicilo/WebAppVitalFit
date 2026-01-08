@@ -5,12 +5,12 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { IdentificationTypeService } from '../../../services/identification-type.service';
-import { IdentificationType } from '../../../interfaces/identification-type.interface';
+import { EmployeeTypeService } from '../../../services/employee-type.service';
+import { EmployeeType } from '../../../interfaces/employee-type.interface';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-document-type-form',
+  selector: 'app-employee-type-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -20,25 +20,25 @@ import Swal from 'sweetalert2';
     MatInputModule,
     MatButtonModule
   ],
-  templateUrl: './document-type-form.component.html',
-  styleUrl: './document-type-form.component.scss'
+  templateUrl: './employee-type-form.component.html',
+  styleUrl: './employee-type-form.component.scss'
 })
-export class DocumentTypeFormComponent {
-  private dialogRef = inject(MatDialogRef<DocumentTypeFormComponent>);
-  private documentTypeService = inject(IdentificationTypeService);
+export class EmployeeTypeFormComponent {
+  private dialogRef = inject(MatDialogRef<EmployeeTypeFormComponent>);
+  private employeeTypeService = inject(EmployeeTypeService);
   private fb = inject(FormBuilder);
   
-  documentType: IdentificationType | null;
-  documentTypeForm: FormGroup;
+  employeeType: EmployeeType | null;
+  employeeTypeForm: FormGroup;
   isLoading = false;
   isEditMode: boolean;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { documentType: IdentificationType | null }) {
-    this.documentType = data.documentType;
-    this.isEditMode = !!this.documentType;
-    this.documentTypeForm = this.fb.group({
-      name: [this.documentType?.name || '', [Validators.required, Validators.minLength(3)]],
-      description: [this.documentType?.description || '']
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { employeeType: EmployeeType | null }) {
+    this.employeeType = data.employeeType;
+    this.isEditMode = !!this.employeeType;
+    this.employeeTypeForm = this.fb.group({
+      name: [this.employeeType?.name || '', [Validators.required, Validators.minLength(3)]],
+      description: [this.employeeType?.description || '', [Validators.required]]
     });
   }
 
@@ -47,29 +47,28 @@ export class DocumentTypeFormComponent {
   }
 
   onSave(): void {
-    if (this.documentTypeForm.invalid) {
-      this.documentTypeForm.markAllAsTouched();
+    if (this.employeeTypeForm.invalid) {
+      this.employeeTypeForm.markAllAsTouched();
       return;
     }
 
     this.isLoading = true;
 
-    // Get raw value to include disabled fields
-    const formValue = this.documentTypeForm.getRawValue();
+    const formValue = this.employeeTypeForm.getRawValue();
 
-    if (this.isEditMode && this.documentType?.id) {
-      const documentTypeData: IdentificationType = {
-        id: this.documentType.id,
+    if (this.isEditMode && this.employeeType?.id) {
+      const employeeTypeData: EmployeeType = {
+        id: this.employeeType.id,
         ...formValue
       };
 
-      this.documentTypeService.update(this.documentType.id, documentTypeData).subscribe({
+      this.employeeTypeService.update(this.employeeType.id, employeeTypeData).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.isSuccess) {
             Swal.fire({
               title: '¡Éxito!',
-              text: 'Tipo de documento actualizado correctamente',
+              text: 'Tipo de empleado actualizado correctamente',
               icon: 'success',
               confirmButtonColor: '#10b981',
               timer: 2000,
@@ -79,7 +78,7 @@ export class DocumentTypeFormComponent {
           } else {
             Swal.fire({
               title: 'Error',
-              text: response.error?.message || 'Error al actualizar tipo de documento',
+              text: response.error?.message || 'Error al actualizar tipo de empleado',
               icon: 'error',
               confirmButtonColor: '#dc2626'
             });
@@ -89,20 +88,20 @@ export class DocumentTypeFormComponent {
           this.isLoading = false;
           Swal.fire({
             title: 'Error',
-            text: error.error?.message || 'Error al actualizar tipo de documento',
+            text: error.error?.message || 'Error al actualizar tipo de empleado',
             icon: 'error',
             confirmButtonColor: '#dc2626'
           });
         }
       });
     } else {
-      this.documentTypeService.create(formValue).subscribe({
+      this.employeeTypeService.create(formValue).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.isSuccess) {
             Swal.fire({
               title: '¡Éxito!',
-              text: 'Tipo de documento creado correctamente',
+              text: 'Tipo de empleado creado correctamente',
               icon: 'success',
               confirmButtonColor: '#10b981',
               timer: 2000,
@@ -112,7 +111,7 @@ export class DocumentTypeFormComponent {
           } else {
             Swal.fire({
               title: 'Error',
-              text: response.error?.message || 'Error al crear tipo de documento',
+              text: response.error?.message || 'Error al crear tipo de empleado',
               icon: 'error',
               confirmButtonColor: '#dc2626'
             });
@@ -122,7 +121,7 @@ export class DocumentTypeFormComponent {
           this.isLoading = false;
           Swal.fire({
             title: 'Error',
-            text: error.error?.message || 'Error al crear tipo de documento',
+            text: error.error?.message || 'Error al crear tipo de empleado',
             icon: 'error',
             confirmButtonColor: '#dc2626'
           });

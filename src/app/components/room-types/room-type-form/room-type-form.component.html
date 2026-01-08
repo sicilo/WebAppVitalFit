@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Tipo de Sala' : 'Crear Tipo de Sala' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="roomTypeForm" class="room-type-dialog-form">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="Ej: Sala de Estética">
+      <mat-error *ngIf="roomTypeForm.get('name')?.hasError('required')">
+        El nombre es requerido
+      </mat-error>
+      <mat-error *ngIf="roomTypeForm.get('name')?.hasError('minlength')">
+        Debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Descripción (Opcional)</mat-label>
+      <textarea matInput formControlName="description" placeholder="Describe el tipo de sala" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="roomTypeForm.invalid || isLoading">
+    {{ isLoading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+  </button>
+</mat-dialog-actions>

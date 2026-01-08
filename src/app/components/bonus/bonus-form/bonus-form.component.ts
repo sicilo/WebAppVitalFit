@@ -1,16 +1,16 @@
-import { Component, Inject, inject } from '@angular/core';
+﻿import { Component, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { IdentificationTypeService } from '../../../services/identification-type.service';
-import { IdentificationType } from '../../../interfaces/identification-type.interface';
+import { BonusService } from '../../../services/bonus.service';
+import { Bonus } from '../../../interfaces/bonus.interface';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-document-type-form',
+  selector: 'app-bonus-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -20,25 +20,27 @@ import Swal from 'sweetalert2';
     MatInputModule,
     MatButtonModule
   ],
-  templateUrl: './document-type-form.component.html',
-  styleUrl: './document-type-form.component.scss'
+  templateUrl: './bonus-form.component.html',
+  styleUrl: './bonus-form.component.scss'
 })
-export class DocumentTypeFormComponent {
-  private dialogRef = inject(MatDialogRef<DocumentTypeFormComponent>);
-  private documentTypeService = inject(IdentificationTypeService);
+export class BonusFormComponent {
+  private dialogRef = inject(MatDialogRef<BonusFormComponent>);
+  private bonusService = inject(BonusService);
   private fb = inject(FormBuilder);
   
-  documentType: IdentificationType | null;
-  documentTypeForm: FormGroup;
+  bonus: Bonus | null;
+  bonusForm: FormGroup;
   isLoading = false;
   isEditMode: boolean;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { documentType: IdentificationType | null }) {
-    this.documentType = data.documentType;
-    this.isEditMode = !!this.documentType;
-    this.documentTypeForm = this.fb.group({
-      name: [this.documentType?.name || '', [Validators.required, Validators.minLength(3)]],
-      description: [this.documentType?.description || '']
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { bonus: Bonus | null }) {
+    this.bonus = data.bonus;
+    this.isEditMode = !!this.bonus;
+    this.bonusForm = this.fb.group({
+      name: [this.bonus?.name || '', [Validators.required, Validators.minLength(3)]],
+      description: [this.bonus?.description || ''],
+      sessions: [this.bonus?.sessions || null, [Validators.min(1)]],
+      price: [this.bonus?.price || null, [Validators.min(0)]]
     });
   }
 
@@ -47,29 +49,29 @@ export class DocumentTypeFormComponent {
   }
 
   onSave(): void {
-    if (this.documentTypeForm.invalid) {
-      this.documentTypeForm.markAllAsTouched();
+    if (this.bonusForm.invalid) {
+      this.bonusForm.markAllAsTouched();
       return;
     }
 
     this.isLoading = true;
 
     // Get raw value to include disabled fields
-    const formValue = this.documentTypeForm.getRawValue();
+    const formValue = this.bonusForm.getRawValue();
 
-    if (this.isEditMode && this.documentType?.id) {
-      const documentTypeData: IdentificationType = {
-        id: this.documentType.id,
+    if (this.isEditMode && this.bonus?.id) {
+      const bonusData: Bonus = {
+        id: this.bonus.id,
         ...formValue
       };
 
-      this.documentTypeService.update(this.documentType.id, documentTypeData).subscribe({
+      this.bonusService.update(this.bonus.id, bonusData).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.isSuccess) {
             Swal.fire({
-              title: '¡Éxito!',
-              text: 'Tipo de documento actualizado correctamente',
+              title: 'Â¡Ã‰xito!',
+              text: 'Bono actualizado correctamente',
               icon: 'success',
               confirmButtonColor: '#10b981',
               timer: 2000,
@@ -79,7 +81,7 @@ export class DocumentTypeFormComponent {
           } else {
             Swal.fire({
               title: 'Error',
-              text: response.error?.message || 'Error al actualizar tipo de documento',
+              text: response.error?.message || 'Error al actualizar bono',
               icon: 'error',
               confirmButtonColor: '#dc2626'
             });
@@ -89,20 +91,20 @@ export class DocumentTypeFormComponent {
           this.isLoading = false;
           Swal.fire({
             title: 'Error',
-            text: error.error?.message || 'Error al actualizar tipo de documento',
+            text: error.error?.message || 'Error al actualizar bono',
             icon: 'error',
             confirmButtonColor: '#dc2626'
           });
         }
       });
     } else {
-      this.documentTypeService.create(formValue).subscribe({
+      this.bonusService.create(formValue).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.isSuccess) {
             Swal.fire({
-              title: '¡Éxito!',
-              text: 'Tipo de documento creado correctamente',
+              title: 'Â¡Ã‰xito!',
+              text: 'Bono creado correctamente',
               icon: 'success',
               confirmButtonColor: '#10b981',
               timer: 2000,
@@ -112,7 +114,7 @@ export class DocumentTypeFormComponent {
           } else {
             Swal.fire({
               title: 'Error',
-              text: response.error?.message || 'Error al crear tipo de documento',
+              text: response.error?.message || 'Error al crear bono',
               icon: 'error',
               confirmButtonColor: '#dc2626'
             });
@@ -122,7 +124,7 @@ export class DocumentTypeFormComponent {
           this.isLoading = false;
           Swal.fire({
             title: 'Error',
-            text: error.error?.message || 'Error al crear tipo de documento',
+            text: error.error?.message || 'Error al crear bono',
             icon: 'error',
             confirmButtonColor: '#dc2626'
           });

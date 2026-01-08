@@ -1,0 +1,72 @@
+<div class="bundle-list-container">
+  <div class="page-header">
+    <h1>Paquetes</h1>
+    <button mat-raised-button color="primary" (click)="createBundle()">
+      <mat-icon>add</mat-icon> Nuevo Paquete
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Cargando paquetes...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Bundles Table -->
+  <div class="table-container" *ngIf="!isLoading && bundles.length > 0">
+    <table mat-table [dataSource]="bundles" class="mat-elevation-z2">
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let bundle">{{ bundle.name }}</td>
+      </ng-container>
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let bundle">
+          <strong>{{ bundle.price | currency:'USD':'symbol':'1.2-2' }}</strong>
+        </td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let bundle">
+          {{ bundle.description || '-' }}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let bundle">
+          <button mat-icon-button color="primary" (click)="editBundle(bundle)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="confirmDelete(bundle)" matTooltip="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && bundles.length === 0 && !errorMessage">
+    <mat-icon>inventory_2</mat-icon>
+    <h3>No hay paquetes registrados</h3>
+    <button mat-raised-button color="primary" (click)="createBundle()">
+      Crear primer paquete
+    </button>
+  </div>
+</div>

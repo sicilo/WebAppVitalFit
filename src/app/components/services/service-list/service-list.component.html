@@ -1,0 +1,73 @@
+<div class="service-list-container">
+  <div class="page-header">
+    <h1>Servicios</h1>
+    <button mat-raised-button color="primary" (click)="createService()">
+      <mat-icon>add</mat-icon> Nuevo Servicio
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Cargando servicios...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Services Table -->
+  <div class="table-container" *ngIf="!isLoading && services.length > 0">
+    <table mat-table [dataSource]="services" class="mat-elevation-z2">
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let service">{{ service.name }}</td>
+      </ng-container>
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let service">
+          <strong *ngIf="service.price">{{ service.price | currency:'USD':'symbol':'1.2-2' }}</strong>
+          <span *ngIf="!service.price">-</span>
+        </td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let service">
+          {{ service.description || '-' }}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let service">
+          <button mat-icon-button color="primary" (click)="editService(service)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="confirmDelete(service)" matTooltip="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && services.length === 0 && !errorMessage">
+    <mat-icon>room_service</mat-icon>
+    <h3>No hay servicios registrados</h3>
+    <button mat-raised-button color="primary" (click)="createService()">
+      Crear primer servicio
+    </button>
+  </div>
+</div>

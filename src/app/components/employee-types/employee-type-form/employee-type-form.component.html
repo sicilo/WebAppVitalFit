@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Tipo de Empleado' : 'Crear Tipo de Empleado' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="employeeTypeForm" class="employee-type-dialog-form">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="Ej: Tiempo Completo">
+      <mat-error *ngIf="employeeTypeForm.get('name')?.hasError('required')">
+        El nombre es requerido
+      </mat-error>
+      <mat-error *ngIf="employeeTypeForm.get('name')?.hasError('minlength')">
+        Debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="description" placeholder="Describe el tipo de empleado" rows="3"></textarea>
+      <mat-error *ngIf="employeeTypeForm.get('description')?.hasError('required')">
+        La descripción es requerida
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="employeeTypeForm.invalid || isLoading">
+    {{ isLoading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+  </button>
+</mat-dialog-actions>

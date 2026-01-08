@@ -3,95 +3,92 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { IdentificationTypeService } from '../../../services/identification-type.service';
-import { IdentificationType } from '../../../interfaces/identification-type.interface';
-import { DocumentTypeFormComponent } from '../document-type-form/document-type-form.component';
+import { BundleService } from '../../../services/bundle.service';
+import { Bundle } from '../../../interfaces/bundle.interface';
+import { BundleFormComponent } from '../bundle-form/bundle-form.component';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-document-type-list',
+  selector: 'app-bundle-list',
   standalone: true,
   imports: [
     CommonModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    MatChipsModule,
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTooltipModule
   ],
-  templateUrl: './document-type-list.component.html',
-  styleUrl: './document-type-list.component.scss'
+  templateUrl: './bundle-list.component.html',
+  styleUrl: './bundle-list.component.scss'
 })
-export class DocumentTypeListComponent implements OnInit {
-  private documentTypeService = inject(IdentificationTypeService);
+export class BundleListComponent implements OnInit {
+  private bundleService = inject(BundleService);
   private dialog = inject(MatDialog);
 
-  documentTypes: IdentificationType[] = [];
+  bundles: Bundle[] = [];
   isLoading = false;
   errorMessage = '';
-  displayedColumns: string[] = ['name', 'description', 'actions'];
+  displayedColumns: string[] = ['name', 'price', 'description', 'actions'];
 
   ngOnInit(): void {
-    this.loadDocumentTypes();
+    this.loadBundles();
   }
 
-  loadDocumentTypes(): void {
+  loadBundles(): void {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.documentTypeService.getAll().subscribe({
+    this.bundleService.getAll().subscribe({
       next: (response) => {
         this.isLoading = false;
         if (response.isSuccess) {
-          this.documentTypes = response.value;
+          this.bundles = response.value;
         } else {
-          this.errorMessage = 'Error al cargar tipos de documento';
+          this.errorMessage = response.error?.message || 'Error al cargar paquetes';
         }
       },
       error: (error) => {
         this.isLoading = false;
-        console.error('Error al cargar tipos de documento:', error);
-        this.errorMessage = error.error?.message || 'Error al cargar tipos de documento';
+        this.errorMessage = error.error?.message || 'Error al cargar paquetes';
       }
     });
   }
 
-  createDocumentType(): void {
-    const dialogRef = this.dialog.open(DocumentTypeFormComponent, {
+  createBundle(): void {
+    const dialogRef = this.dialog.open(BundleFormComponent, {
       width: '600px',
-      data: { documentType: null }
+      data: { bundle: null }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadDocumentTypes();
+        this.loadBundles();
       }
     });
   }
 
-  editDocumentType(documentType: IdentificationType): void {
-    const dialogRef = this.dialog.open(DocumentTypeFormComponent, {
+  editBundle(bundle: Bundle): void {
+    const dialogRef = this.dialog.open(BundleFormComponent, {
       width: '600px',
-      data: { documentType }
+      data: { bundle }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadDocumentTypes();
+        this.loadBundles();
       }
     });
   }
 
-  confirmDelete(documentType: IdentificationType): void {
+  confirmDelete(bundle: Bundle): void {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: `¿Deseas eliminar el tipo de documento ${documentType.name}?`,
+      text: `¿Deseas eliminar el paquete ${bundle.name}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#dc2626',
@@ -100,37 +97,37 @@ export class DocumentTypeListComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       reverseButtons: true
     }).then((result) => {
-      if (result.isConfirmed && documentType.id) {
-        this.deleteDocumentType(documentType.id);
+      if (result.isConfirmed && bundle.id) {
+        this.deleteBundle(bundle.id);
       }
     });
   }
 
-  deleteDocumentType(documentTypeId: string): void {
-    this.documentTypeService.delete(documentTypeId).subscribe({
+  deleteBundle(bundleId: string): void {
+    this.bundleService.delete(bundleId).subscribe({
       next: (response) => {
         if (response.isSuccess) {
           Swal.fire({
             title: '¡Eliminado!',
-            text: 'El tipo de documento ha sido eliminado exitosamente',
+            text: 'El paquete ha sido eliminado exitosamente',
             icon: 'success',
             confirmButtonColor: '#10b981'
           });
-          this.loadDocumentTypes();
+          this.loadBundles();
         } else {
           Swal.fire({
             title: 'Error',
-            text: 'No se pudo eliminar el tipo de documento',
+            text: 'No se pudo eliminar el paquete',
             icon: 'error',
             confirmButtonColor: '#dc2626'
           });
         }
       },
       error: (error) => {
-        console.error('Error al eliminar tipo de documento:', error);
+        console.error('Error al eliminar paquete:', error);
         Swal.fire({
           title: 'Error',
-          text: error.error?.message || 'No se pudo eliminar el tipo de documento',
+          text: error.error?.message || 'No se pudo eliminar el paquete',
           icon: 'error',
           confirmButtonColor: '#dc2626'
         });

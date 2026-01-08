@@ -5,12 +5,12 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { IdentificationTypeService } from '../../../services/identification-type.service';
-import { IdentificationType } from '../../../interfaces/identification-type.interface';
+import { JobTitleService } from '../../../services/job-title.service';
+import { JobTitle } from '../../../interfaces/job-title.interface';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-document-type-form',
+  selector: 'app-job-title-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -20,25 +20,25 @@ import Swal from 'sweetalert2';
     MatInputModule,
     MatButtonModule
   ],
-  templateUrl: './document-type-form.component.html',
-  styleUrl: './document-type-form.component.scss'
+  templateUrl: './job-title-form.component.html',
+  styleUrl: './job-title-form.component.scss'
 })
-export class DocumentTypeFormComponent {
-  private dialogRef = inject(MatDialogRef<DocumentTypeFormComponent>);
-  private documentTypeService = inject(IdentificationTypeService);
+export class JobTitleFormComponent {
+  private dialogRef = inject(MatDialogRef<JobTitleFormComponent>);
+  private jobTitleService = inject(JobTitleService);
   private fb = inject(FormBuilder);
   
-  documentType: IdentificationType | null;
-  documentTypeForm: FormGroup;
+  jobTitle: JobTitle | null;
+  jobTitleForm: FormGroup;
   isLoading = false;
   isEditMode: boolean;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { documentType: IdentificationType | null }) {
-    this.documentType = data.documentType;
-    this.isEditMode = !!this.documentType;
-    this.documentTypeForm = this.fb.group({
-      name: [this.documentType?.name || '', [Validators.required, Validators.minLength(3)]],
-      description: [this.documentType?.description || '']
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { jobTitle: JobTitle | null }) {
+    this.jobTitle = data.jobTitle;
+    this.isEditMode = !!this.jobTitle;
+    this.jobTitleForm = this.fb.group({
+      name: [this.jobTitle?.name || '', [Validators.required, Validators.minLength(3)]],
+      description: [this.jobTitle?.description || '']
     });
   }
 
@@ -47,29 +47,28 @@ export class DocumentTypeFormComponent {
   }
 
   onSave(): void {
-    if (this.documentTypeForm.invalid) {
-      this.documentTypeForm.markAllAsTouched();
+    if (this.jobTitleForm.invalid) {
+      this.jobTitleForm.markAllAsTouched();
       return;
     }
 
     this.isLoading = true;
 
-    // Get raw value to include disabled fields
-    const formValue = this.documentTypeForm.getRawValue();
+    const formValue = this.jobTitleForm.getRawValue();
 
-    if (this.isEditMode && this.documentType?.id) {
-      const documentTypeData: IdentificationType = {
-        id: this.documentType.id,
+    if (this.isEditMode && this.jobTitle?.id) {
+      const jobTitleData: JobTitle = {
+        id: this.jobTitle.id,
         ...formValue
       };
 
-      this.documentTypeService.update(this.documentType.id, documentTypeData).subscribe({
+      this.jobTitleService.update(this.jobTitle.id, jobTitleData).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.isSuccess) {
             Swal.fire({
               title: '¡Éxito!',
-              text: 'Tipo de documento actualizado correctamente',
+              text: 'Cargo actualizado correctamente',
               icon: 'success',
               confirmButtonColor: '#10b981',
               timer: 2000,
@@ -79,7 +78,7 @@ export class DocumentTypeFormComponent {
           } else {
             Swal.fire({
               title: 'Error',
-              text: response.error?.message || 'Error al actualizar tipo de documento',
+              text: response.error?.message || 'Error al actualizar cargo',
               icon: 'error',
               confirmButtonColor: '#dc2626'
             });
@@ -89,20 +88,20 @@ export class DocumentTypeFormComponent {
           this.isLoading = false;
           Swal.fire({
             title: 'Error',
-            text: error.error?.message || 'Error al actualizar tipo de documento',
+            text: error.error?.message || 'Error al actualizar cargo',
             icon: 'error',
             confirmButtonColor: '#dc2626'
           });
         }
       });
     } else {
-      this.documentTypeService.create(formValue).subscribe({
+      this.jobTitleService.create(formValue).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.isSuccess) {
             Swal.fire({
               title: '¡Éxito!',
-              text: 'Tipo de documento creado correctamente',
+              text: 'Cargo creado correctamente',
               icon: 'success',
               confirmButtonColor: '#10b981',
               timer: 2000,
@@ -112,7 +111,7 @@ export class DocumentTypeFormComponent {
           } else {
             Swal.fire({
               title: 'Error',
-              text: response.error?.message || 'Error al crear tipo de documento',
+              text: response.error?.message || 'Error al crear cargo',
               icon: 'error',
               confirmButtonColor: '#dc2626'
             });
@@ -122,7 +121,7 @@ export class DocumentTypeFormComponent {
           this.isLoading = false;
           Swal.fire({
             title: 'Error',
-            text: error.error?.message || 'Error al crear tipo de documento',
+            text: error.error?.message || 'Error al crear cargo',
             icon: 'error',
             confirmButtonColor: '#dc2626'
           });

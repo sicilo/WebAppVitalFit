@@ -1,0 +1,71 @@
+<div class="novelty-type-list-container">
+  <div class="page-header">
+    <h1>Tipos de Novedad</h1>
+    <button mat-raised-button color="primary" (click)="createNoveltyType()">
+      <mat-icon>add</mat-icon> Nuevo Tipo de Novedad
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Cargando tipos de novedad...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Novelty Types Table -->
+  <div class="table-container" *ngIf="!isLoading && noveltyTypes.length > 0">
+    <table mat-table [dataSource]="noveltyTypes" class="mat-elevation-z2">
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let noveltyType">{{ noveltyType.name }}</td>
+      </ng-container>
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let noveltyType">
+          <strong *ngIf="noveltyType.price">{{ noveltyType.price | currency:'USD':'symbol':'1.2-2' }}</strong>
+          <span *ngIf="!noveltyType.price">-</span>
+        </td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let noveltyType">{{ noveltyType.description || '-' }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let noveltyType">
+          <button mat-icon-button color="primary" (click)="editNoveltyType(noveltyType)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="confirmDelete(noveltyType)" matTooltip="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && noveltyTypes.length === 0 && !errorMessage">
+    <mat-icon>new_releases</mat-icon>
+    <h3>No hay tipos de novedad registrados</h3>
+    <button mat-raised-button color="primary" (click)="createNoveltyType()">
+      Crear primer tipo de novedad
+    </button>
+  </div>
+</div>

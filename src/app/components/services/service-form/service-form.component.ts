@@ -5,12 +5,12 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { IdentificationTypeService } from '../../../services/identification-type.service';
-import { IdentificationType } from '../../../interfaces/identification-type.interface';
+import { ServiceService } from '../../../services/service.service';
+import { Service } from '../../../interfaces/service.interface';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-document-type-form',
+  selector: 'app-service-form',
   standalone: true,
   imports: [
     CommonModule,
@@ -20,25 +20,26 @@ import Swal from 'sweetalert2';
     MatInputModule,
     MatButtonModule
   ],
-  templateUrl: './document-type-form.component.html',
-  styleUrl: './document-type-form.component.scss'
+  templateUrl: './service-form.component.html',
+  styleUrl: './service-form.component.scss'
 })
-export class DocumentTypeFormComponent {
-  private dialogRef = inject(MatDialogRef<DocumentTypeFormComponent>);
-  private documentTypeService = inject(IdentificationTypeService);
+export class ServiceFormComponent {
+  private dialogRef = inject(MatDialogRef<ServiceFormComponent>);
+  private serviceService = inject(ServiceService);
   private fb = inject(FormBuilder);
   
-  documentType: IdentificationType | null;
-  documentTypeForm: FormGroup;
+  service: Service | null;
+  serviceForm: FormGroup;
   isLoading = false;
   isEditMode: boolean;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { documentType: IdentificationType | null }) {
-    this.documentType = data.documentType;
-    this.isEditMode = !!this.documentType;
-    this.documentTypeForm = this.fb.group({
-      name: [this.documentType?.name || '', [Validators.required, Validators.minLength(3)]],
-      description: [this.documentType?.description || '']
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { service: Service | null }) {
+    this.service = data.service;
+    this.isEditMode = !!this.service;
+    this.serviceForm = this.fb.group({
+      name: [this.service?.name || '', [Validators.required, Validators.minLength(3)]],
+      description: [this.service?.description || ''],
+      price: [this.service?.price || null, [Validators.min(0)]]
     });
   }
 
@@ -47,29 +48,28 @@ export class DocumentTypeFormComponent {
   }
 
   onSave(): void {
-    if (this.documentTypeForm.invalid) {
-      this.documentTypeForm.markAllAsTouched();
+    if (this.serviceForm.invalid) {
+      this.serviceForm.markAllAsTouched();
       return;
     }
 
     this.isLoading = true;
 
-    // Get raw value to include disabled fields
-    const formValue = this.documentTypeForm.getRawValue();
+    const formValue = this.serviceForm.getRawValue();
 
-    if (this.isEditMode && this.documentType?.id) {
-      const documentTypeData: IdentificationType = {
-        id: this.documentType.id,
+    if (this.isEditMode && this.service?.id) {
+      const serviceData: Service = {
+        id: this.service.id,
         ...formValue
       };
 
-      this.documentTypeService.update(this.documentType.id, documentTypeData).subscribe({
+      this.serviceService.update(this.service.id, serviceData).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.isSuccess) {
             Swal.fire({
               title: '¡Éxito!',
-              text: 'Tipo de documento actualizado correctamente',
+              text: 'Servicio actualizado correctamente',
               icon: 'success',
               confirmButtonColor: '#10b981',
               timer: 2000,
@@ -79,7 +79,7 @@ export class DocumentTypeFormComponent {
           } else {
             Swal.fire({
               title: 'Error',
-              text: response.error?.message || 'Error al actualizar tipo de documento',
+              text: response.error?.message || 'Error al actualizar servicio',
               icon: 'error',
               confirmButtonColor: '#dc2626'
             });
@@ -89,20 +89,20 @@ export class DocumentTypeFormComponent {
           this.isLoading = false;
           Swal.fire({
             title: 'Error',
-            text: error.error?.message || 'Error al actualizar tipo de documento',
+            text: error.error?.message || 'Error al actualizar servicio',
             icon: 'error',
             confirmButtonColor: '#dc2626'
           });
         }
       });
     } else {
-      this.documentTypeService.create(formValue).subscribe({
+      this.serviceService.create(formValue).subscribe({
         next: (response) => {
           this.isLoading = false;
           if (response.isSuccess) {
             Swal.fire({
               title: '¡Éxito!',
-              text: 'Tipo de documento creado correctamente',
+              text: 'Servicio creado correctamente',
               icon: 'success',
               confirmButtonColor: '#10b981',
               timer: 2000,
@@ -112,7 +112,7 @@ export class DocumentTypeFormComponent {
           } else {
             Swal.fire({
               title: 'Error',
-              text: response.error?.message || 'Error al crear tipo de documento',
+              text: response.error?.message || 'Error al crear servicio',
               icon: 'error',
               confirmButtonColor: '#dc2626'
             });
@@ -122,7 +122,7 @@ export class DocumentTypeFormComponent {
           this.isLoading = false;
           Swal.fire({
             title: 'Error',
-            text: error.error?.message || 'Error al crear tipo de documento',
+            text: error.error?.message || 'Error al crear servicio',
             icon: 'error',
             confirmButtonColor: '#dc2626'
           });

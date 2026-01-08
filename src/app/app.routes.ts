@@ -121,6 +121,78 @@ export const routes: Routes = [
           ),
         // canActivate: [AuthGuard]
       },
+      {
+        path: 'bonus',
+        loadComponent: () =>
+          import('./components/bonus/bonus-list/bonus-list.component').then(
+            (m) => m.BonusListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'bundle',
+        loadComponent: () =>
+          import('./components/bundle/bundle-list/bundle-list.component').then(
+            (m) => m.BundleListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'employee-types',
+        loadComponent: () =>
+          import('./components/employee-types/employee-type-list/employee-type-list.component').then(
+            (m) => m.EmployeeTypeListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'genders',
+        loadComponent: () =>
+          import('./components/genders/gender-list/gender-list.component').then(
+            (m) => m.GenderListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'job-titles',
+        loadComponent: () =>
+          import('./components/job-titles/job-title-list/job-title-list.component').then(
+            (m) => m.JobTitleListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'novelty-types',
+        loadComponent: () =>
+          import('./components/novelty-types/novelty-type-list/novelty-type-list.component').then(
+            (m) => m.NoveltyTypeListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'products',
+        loadComponent: () =>
+          import('./components/products/product-list/product-list.component').then(
+            (m) => m.ProductListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'room-types',
+        loadComponent: () =>
+          import('./components/room-types/room-type-list/room-type-list.component').then(
+            (m) => m.RoomTypeListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'services',
+        loadComponent: () =>
+          import('./components/services/service-list/service-list.component').then(
+            (m) => m.ServiceListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
 
     ],
   },
