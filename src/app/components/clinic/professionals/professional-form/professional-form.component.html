@@ -1,0 +1,107 @@
+<div class="professional-form-container">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <div class="header-content">
+        <button mat-icon-button (click)="goBack()" matTooltip="Volver">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <mat-card-title>{{ isEditMode ? 'Editar Profesional' : 'Crear Profesional' }}</mat-card-title>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Loading State -->
+      <div class="loading" *ngIf="isLoading && isEditMode">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Cargando profesional...</p>
+      </div>
+
+      <!-- Form -->
+      <form [formGroup]="professionalForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading || !isEditMode">
+        <div class="form-section">
+          <h3>Información de Identificación</h3>
+          <div class="form-row">
+            <mat-form-field>
+              <mat-label>Tipo de Documento</mat-label>
+              <mat-select formControlName="identificationTypeId">
+                <mat-option *ngFor="let type of identificationTypes" [value]="type.id">
+                  {{ type.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="professionalForm.get('identificationTypeId')?.hasError('required')">
+                El tipo de documento es requerido
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Número de Identificación</mat-label>
+              <input matInput formControlName="identification" placeholder="Ej: 1234567890">
+              <mat-error *ngIf="professionalForm.get('identification')?.hasError('required')">
+                La identificación es requerida
+              </mat-error>
+              <mat-error *ngIf="professionalForm.get('identification')?.hasError('minlength')">
+                Debe tener al menos 3 caracteres
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Información Personal</h3>
+          <div class="form-row">
+            <mat-form-field>
+              <mat-label>Nombres</mat-label>
+              <input matInput formControlName="names" placeholder="Ej: Juan Carlos">
+              <mat-error *ngIf="professionalForm.get('names')?.hasError('required')">
+                Los nombres son requeridos
+              </mat-error>
+              <mat-error *ngIf="professionalForm.get('names')?.hasError('minlength')">
+                Debe tener al menos 2 caracteres
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Apellidos</mat-label>
+              <input matInput formControlName="surnames" placeholder="Ej: Pérez García">
+              <mat-error *ngIf="professionalForm.get('surnames')?.hasError('required')">
+                Los apellidos son requeridos
+              </mat-error>
+              <mat-error *ngIf="professionalForm.get('surnames')?.hasError('minlength')">
+                Debe tener al menos 2 caracteres
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Información de Contacto</h3>
+          <div class="form-row">
+            <mat-form-field>
+              <mat-label>Teléfono (Opcional)</mat-label>
+              <input matInput formControlName="phone" placeholder="Ej: 3001234567">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Email (Opcional)</mat-label>
+              <input matInput type="email" formControlName="email" placeholder="Ej: correo@ejemplo.com">
+              <mat-error *ngIf="professionalForm.get('email')?.hasError('email')">
+                Email inválido
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="goBack()" [disabled]="isLoading">
+            Cancelar
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="professionalForm.invalid || isLoading">
+            <mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+            <span *ngIf="!isLoading">{{ isEditMode ? 'Actualizar' : 'Crear' }}</span>
+            <span *ngIf="isLoading">Guardando...</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

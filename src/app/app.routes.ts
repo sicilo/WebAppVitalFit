@@ -201,6 +201,78 @@ export const routes: Routes = [
           ),
         // canActivate: [AuthGuard]
       },
+      {
+        path: 'customers',
+        loadComponent: () =>
+          import('./components/clinic/customers/customer-list/customer-list.component').then(
+            (m) => m.CustomerListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'customers/create',
+        loadComponent: () =>
+          import('./components/clinic/customers/customer-form/customer-form.component').then(
+            (m) => m.CustomerFormComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'customers/edit/:id',
+        loadComponent: () =>
+          import('./components/clinic/customers/customer-form/customer-form.component').then(
+            (m) => m.CustomerFormComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'professionals',
+        loadComponent: () =>
+          import('./components/clinic/professionals/professional-list/professional-list.component').then(
+            (m) => m.ProfessionalListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'professionals/create',
+        loadComponent: () =>
+          import('./components/clinic/professionals/professional-form/professional-form.component').then(
+            (m) => m.ProfessionalFormComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'professionals/edit/:id',
+        loadComponent: () =>
+          import('./components/clinic/professionals/professional-form/professional-form.component').then(
+            (m) => m.ProfessionalFormComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'companions',
+        loadComponent: () =>
+          import('./components/clinic/companions/companion-list/companion-list.component').then(
+            (m) => m.CompanionListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'companions/create',
+        loadComponent: () =>
+          import('./components/clinic/companions/companion-form/companion-form.component').then(
+            (m) => m.CompanionFormComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'companions/edit/:id',
+        loadComponent: () =>
+          import('./components/clinic/companions/companion-form/companion-form.component').then(
+            (m) => m.CompanionFormComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
 
     ],
   },

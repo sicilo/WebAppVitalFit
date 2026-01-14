@@ -1,0 +1,80 @@
+<div class="companion-list-container">
+  <div class="page-header">
+    <h1>Acompañantes</h1>
+    <button mat-raised-button color="primary" (click)="createCompanion()">
+      <mat-icon>add</mat-icon> Nuevo Acompañante
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Cargando acompañantes...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Companions Table -->
+  <div class="table-container" *ngIf="!isLoading && companions.length > 0">
+    <table mat-table [dataSource]="companions" class="mat-elevation-z2">
+      
+      <!-- Identification Type Column -->
+      <ng-container matColumnDef="identificationTypeName">
+        <th mat-header-cell *matHeaderCellDef>Tipo de Documento</th>
+        <td mat-cell *matCellDef="let companion">{{ companion.identificationTypeName || '-' }}</td>
+      </ng-container>
+
+      <!-- Identification Column -->
+      <ng-container matColumnDef="identification">
+        <th mat-header-cell *matHeaderCellDef>Identificación</th>
+        <td mat-cell *matCellDef="let companion">{{ companion.identification }}</td>
+      </ng-container>
+
+      <!-- Names Column -->
+      <ng-container matColumnDef="names">
+        <th mat-header-cell *matHeaderCellDef>Nombres</th>
+        <td mat-cell *matCellDef="let companion">{{ companion.names }}</td>
+      </ng-container>
+
+      <!-- Surnames Column -->
+      <ng-container matColumnDef="surnames">
+        <th mat-header-cell *matHeaderCellDef>Apellidos</th>
+        <td mat-cell *matCellDef="let companion">{{ companion.surnames }}</td>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+        <td mat-cell *matCellDef="let companion">{{ companion.phone || '-' }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let companion">
+          <button mat-icon-button color="primary" (click)="editCompanion(companion)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="confirmDelete(companion)" matTooltip="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && companions.length === 0 && !errorMessage">
+    <mat-icon>people</mat-icon>
+    <h3>No hay acompañantes registrados</h3>
+    <button mat-raised-button color="primary" (click)="createCompanion()">
+      Crear primer acompañante
+    </button>
+  </div>
+</div>
