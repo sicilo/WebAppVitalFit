@@ -16,7 +16,7 @@ export interface ApiResponse<T> {
 })
 export class NoveltyTypeService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}novelty-type`;
+  private apiUrl = `${environment.apiUrl}master/novelty-type`;
 
   getAll(): Observable<ApiResponse<NoveltyType[]>> {
     return this.http.get<ApiResponse<NoveltyType[]>>(`${this.apiUrl}/get-all`);

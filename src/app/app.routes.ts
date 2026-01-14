@@ -90,6 +90,14 @@ export const routes: Routes = [
         // canActivate: [AuthGuard]
       },
       {
+        path: 'blood-types',
+        loadComponent: () =>
+          import('./components/blood-types/blood-type-list/blood-type-list.component').then(
+            (m) => m.BloodTypeListComponent
+          ),
+        // canActivate: [AuthGuard]
+      },
+      {
         path: 'insurance-providers',
         loadComponent: () =>
           import('./components/insurance-providers/insurance-provider-list/insurance-provider-list.component').then(

@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Tipo de Sangre' : 'Crear Tipo de Sangre' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="bloodTypeForm" class="blood-type-dialog-form">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="Ej: A+, O-, AB+">
+      <mat-error *ngIf="bloodTypeForm.get('name')?.hasError('required')">
+        El nombre es requerido
+      </mat-error>
+      <mat-error *ngIf="bloodTypeForm.get('name')?.hasError('minlength')">
+        Debe tener al menos 2 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Descripción (Opcional)</mat-label>
+      <textarea matInput formControlName="description" placeholder="Describe el tipo de sangre" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="bloodTypeForm.invalid || isLoading">
+    {{ isLoading ? 'Guardando...' : (isEditMode ? 'Actualizar' : 'Crear') }}
+  </button>
+</mat-dialog-actions>
