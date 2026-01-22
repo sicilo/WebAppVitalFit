@@ -1,0 +1,97 @@
+<div class="flex flex-col gap-4">
+  <div class="px-4 ">
+    <h2 class="text-xl font-semibold m-0">Gestión de Roles</h2>
+    <p class="text-surface-500 mt-1 mb-0">Busca un rol existente o crea uno nuevo</p>
+  </div>
+  <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+    <p-panel>
+      <ng-template #header>
+        <h2 class="text-xl font-semibold m-0"> Formulario de Roles</h2>
+      </ng-template>
+
+      <div class="flex flex-col md:flex-row gap-4 items-center">
+        <div class="flex flex-col gap-2 flex-1">
+          <label for="roleName" class="font-medium">Nombre del Rol</label>
+          <p-autocomplete id="roleName" formControlName="name" [suggestions]="filteredRoles()" optionLabel="name"
+            [invalid]="roleForm.controls.name.invalid && roleForm.controls.name.touched"
+            (completeMethod)="filterRoles($event)" (onSelect)="onRoleSelect($event)" (onClear)="onRoleClear()"
+            field="name" [dropdown]="true" [forceSelection]="false" placeholder="Buscar o escribir nombre del rol..."
+            class="w-full" inputStyleClass="w-full" />
+          @if (roleForm.controls.name.invalid && roleForm.controls.name.touched) {
+          <small class="text-red-500">El nombre del rol es requerido</small>
+          }
+        </div>
+
+
+      </div>
+
+      <ng-template #footer>
+        <section class="flex gap-4">
+          <p-button type="submit" [label]="isEditMode ? 'Actualizar' : 'Crear'" [loading]="loading()"
+            [severity]="isEditMode ? 'success' : 'primary'">
+            <ng-template #icon>
+              <span class="material-symbols-outlined">{{ isEditMode ? 'edit' : 'add' }}</span>
+            </ng-template>
+          </p-button>
+          <p-button label="Eliminar" [loading]="loading()" severity="danger" [disabled]="!selectedRole()?.id">
+            <ng-template #icon>
+              <span class="material-symbols-outlined">delete</span>
+            </ng-template>
+          </p-button>
+        </section>
+      </ng-template>
+    </p-panel>
+  </form>
+
+  <!-- Permissions Table Card -->
+  @if (selectedRole()) {
+  <p-panel>
+    <ng-template #header>
+      <div class="px-4 pt-4 flex justify-between items-center">
+        <div>
+          <h2 class="text-xl font-semibold m-0">Permisos del Rol</h2>
+          <p class="text-surface-500 mt-1 mb-0">
+            Permisos asignados al rol: <strong>{{ selectedRole()?.name }}</strong>
+          </p>
+        </div>
+      </div>
+    </ng-template>
+
+    <pre>{{ permissions | json  }}</pre>
+    <p-accordion [multiple]="true">
+      @for(permission of permissions(); track $index) {
+      <p-accordion-panel [value]="$index">
+        <p-accordion-header>
+          <p>
+            {{permission.roleName}}
+            <span class="font-medium text-sm text-surface-500">({{ getActiveCountText(permission) }})</span>
+          </p>
+        </p-accordion-header>
+        <p-accordion-content>
+          <section class="flex gap-4">
+            @for(action of permission.actions; track action.permissionId) {
+            <div class="flex items-center">
+              <p-checkbox inputId="ingredient1" name="pizza" value="Cheese" [binary]="true"
+                [(ngModel)]="action.active" />
+              <label for="ingredient1" class="ml-2"> {{action.actionName}} </label>
+            </div>
+            }
+          </section>
+        </p-accordion-content>
+      </p-accordion-panel>
+      }
+    </p-accordion>
+
+    <ng-template #footer>
+      <section class="flex gap-4 mt-4">
+        <p-button label="Guardar Cambios" (onClick)="savePermissions()" [loading]="loading()" severity="primary">
+          <ng-template #icon>
+            <span class="material-symbols-outlined">save</span>
+          </ng-template>
+        </p-button>
+      </section>
+
+    </ng-template>
+  </p-panel>
+  }
+</div>

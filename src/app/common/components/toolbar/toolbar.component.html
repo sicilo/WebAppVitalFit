@@ -1,0 +1,21 @@
+<p-toolbar class=" border-none bg-transparent">
+  <ng-template #start>
+    <section class="flex gap-4 items-center">
+      <img src="assets/img/vital_fit_logo_small.svg" alt="VitalFit Logo" class="h-10 mx-auto" />
+      <h1 class="text-xl font-semibold m-0">{{ titleService.title() }}</h1>
+    </section>
+  </ng-template>
+
+  <ng-template #end>
+    <p-button [rounded]="true" [text]="true" severity="secondary" (click)="toggleTheme()"
+      [pTooltip]="themeService.isDarkMode() ? 'Light mode' : 'Dark mode'">
+      <span class="material-symbols-outlined">
+        {{ themeService.isDarkMode() ? 'light_mode' : 'dark_mode' }}
+      </span>
+    </p-button>
+
+    <p-button [rounded]="true" [text]="true" severity="secondary" (click)="logout()" pTooltip="Logout">
+      <span class="material-symbols-outlined">logout</span>
+    </p-button>
+  </ng-template>
+</p-toolbar>

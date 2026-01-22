@@ -1,0 +1,46 @@
+<p-card>
+  <ng-template #header>
+    <div class="text-center pt-6">
+      <img
+        src="assets/img/vital_fit_logo.svg"
+        alt="VitalFit Logo"
+        class="h-16 mx-auto"
+      />      
+      <p class="text-surface-500 mt-1">Ingresa tu cuenta</p>
+    </div>
+  </ng-template>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    @if (errorMessage()) {
+    <p-message severity="error" [text]="errorMessage()!" class="w-full mb-4" />
+    }
+
+    <div class="flex flex-col gap-2 mb-4">
+      <label for="username" class="font-medium">Usuario</label>
+      <input id="username" type="text" pInputText formControlName="username" placeholder="Enter your username"
+        class="w-full"
+        [class.ng-invalid]="loginForm.controls.username.invalid && loginForm.controls.username.touched" />
+      @if (loginForm.controls.username.invalid && loginForm.controls.username.touched) {
+      <small class="text-red-500">Username is required</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-2 mb-6">
+      <label for="password" class="font-medium">Contraseña</label>
+      <p-password id="password" formControlName="password" placeholder="Enter your password" [toggleMask]="true"
+        [feedback]="false" styleClass="w-full" inputStyleClass="w-full"
+        [class.ng-invalid]="loginForm.controls.password.invalid && loginForm.controls.password.touched" />
+      @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
+      <small class="text-red-500">Password is required</small>
+      }
+    </div>
+
+    <p-button type="submit" label="Iniciar Sesión" [loading]="loading()" styleClass="w-full" />
+
+    <div class="text-center mt-4">
+      <a routerLink="/auth/recover" class="text-primary hover:underline">
+        Olvidó su contraseña?
+      </a>
+    </div>
+  </form>
+</p-card>

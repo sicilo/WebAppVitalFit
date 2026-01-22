@@ -1,0 +1,4736 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "WebApiVitalFit.API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/surety/auth/login": {
+      "post": {
+        "tags": [
+          "AuthenticationEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/blood-type/get-all": {
+      "get": {
+        "tags": [
+          "BloodTypeEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BloodTypeIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/blood-type/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "BloodTypeEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BloodTypeApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/blood-type/create": {
+      "post": {
+        "tags": [
+          "BloodTypeEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBloodTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/blood-type/update": {
+      "put": {
+        "tags": [
+          "BloodTypeEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBloodTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/blood-type/delete": {
+      "delete": {
+        "tags": [
+          "BloodTypeEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/bonus/get-all": {
+      "get": {
+        "tags": [
+          "BonusEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BonusIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/bonus/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "BonusEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BonusApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/bonus/create": {
+      "post": {
+        "tags": [
+          "BonusEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBonusRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/bonus/update": {
+      "put": {
+        "tags": [
+          "BonusEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBonusRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/bonus/delete": {
+      "delete": {
+        "tags": [
+          "BonusEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/bundle/get-all": {
+      "get": {
+        "tags": [
+          "BundleEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BundleIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/bundle/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "BundleEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BundleApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/bundle/create": {
+      "post": {
+        "tags": [
+          "BundleEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBundleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/bundle/update": {
+      "put": {
+        "tags": [
+          "BundleEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBundleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/bundle/delete": {
+      "delete": {
+        "tags": [
+          "BundleEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/companion/get-all": {
+      "get": {
+        "tags": [
+          "CompanionEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanionIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/companion/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "CompanionEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanionApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/companion/create": {
+      "post": {
+        "tags": [
+          "CompanionEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCompanionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/companion/update": {
+      "put": {
+        "tags": [
+          "CompanionEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCompanionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/companion/delete": {
+      "delete": {
+        "tags": [
+          "CompanionEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/customer/get-all": {
+      "get": {
+        "tags": [
+          "CustomerEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/customer/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "CustomerEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/customer/create": {
+      "post": {
+        "tags": [
+          "CustomerEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/customer/update": {
+      "put": {
+        "tags": [
+          "CustomerEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/customer/delete": {
+      "delete": {
+        "tags": [
+          "CustomerEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/employee-type/get-all": {
+      "get": {
+        "tags": [
+          "EmployeeTypeEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeTypeIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/employee-type/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "EmployeeTypeEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeTypeApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/employee-type/create": {
+      "post": {
+        "tags": [
+          "EmployeeTypeEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEmployeeTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/employee-type/update": {
+      "put": {
+        "tags": [
+          "EmployeeTypeEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmployeeTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/employee-type/delete": {
+      "delete": {
+        "tags": [
+          "EmployeeTypeEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/gender/get-all": {
+      "get": {
+        "tags": [
+          "GenderEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenderIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/gender/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "GenderEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenderApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/gender/create": {
+      "post": {
+        "tags": [
+          "GenderEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGenderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/gender/update": {
+      "put": {
+        "tags": [
+          "GenderEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateGenderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/gender/delete": {
+      "delete": {
+        "tags": [
+          "GenderEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/identification-type/get-all": {
+      "get": {
+        "tags": [
+          "IdentificationTypeEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentificationTypeIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/identification-type/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "IdentificationTypeEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentificationTypeApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/identification-type/create": {
+      "post": {
+        "tags": [
+          "IdentificationTypeEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIdentificationTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/identification-type/update": {
+      "put": {
+        "tags": [
+          "IdentificationTypeEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateIdentificationTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/identification-type/delete": {
+      "delete": {
+        "tags": [
+          "IdentificationTypeEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/information/get": {
+      "get": {
+        "tags": [
+          "InformationEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "User",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseInformationApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/job-title/get-all": {
+      "get": {
+        "tags": [
+          "JobTitleEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobTitleIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/job-title/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "JobTitleEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobTitleApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/job-title/create": {
+      "post": {
+        "tags": [
+          "JobTitleEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateJobTitleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/job-title/update": {
+      "put": {
+        "tags": [
+          "JobTitleEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateJobTitleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/job-title/delete": {
+      "delete": {
+        "tags": [
+          "JobTitleEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/novelty-type/get-all": {
+      "get": {
+        "tags": [
+          "NoveltyTypeEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoveltyTypeIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/novelty-type/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "NoveltyTypeEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoveltyTypeApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/novelty-type/create": {
+      "post": {
+        "tags": [
+          "NoveltyTypeEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNoveltyTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/novelty-type/update": {
+      "put": {
+        "tags": [
+          "NoveltyTypeEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNoveltyTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/novelty-type/delete": {
+      "delete": {
+        "tags": [
+          "NoveltyTypeEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/permission/permisos-por-rol": {
+      "get": {
+        "tags": [
+          "PermissionEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "RoleId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/product/get-all": {
+      "get": {
+        "tags": [
+          "ProductEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/product/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "ProductEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/product/create": {
+      "post": {
+        "tags": [
+          "ProductEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/product/update": {
+      "put": {
+        "tags": [
+          "ProductEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/product/delete": {
+      "delete": {
+        "tags": [
+          "ProductEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/professional/get-all": {
+      "get": {
+        "tags": [
+          "ProfessionalEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/professional/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "ProfessionalEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfessionalApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/professional/create": {
+      "post": {
+        "tags": [
+          "ProfessionalEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfessionalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/professional/update": {
+      "put": {
+        "tags": [
+          "ProfessionalEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfessionalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clinic/professional/delete": {
+      "delete": {
+        "tags": [
+          "ProfessionalEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/role/get-all": {
+      "get": {
+        "tags": [
+          "RoleEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/role/{id}": {
+      "get": {
+        "tags": [
+          "RoleEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/role/{id}/permissions": {
+      "get": {
+        "tags": [
+          "RoleEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RolePermissionViewIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/role/create": {
+      "post": {
+        "tags": [
+          "RoleEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/role/permissions": {
+      "post": {
+        "tags": [
+          "RoleEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManageRolePermissionsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/role/update": {
+      "put": {
+        "tags": [
+          "RoleEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/role/delete": {
+      "delete": {
+        "tags": [
+          "RoleEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/room-type/get-all": {
+      "get": {
+        "tags": [
+          "RoomTypeEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomTypeIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/room-type/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "RoomTypeEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomTypeApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/room-type/create": {
+      "post": {
+        "tags": [
+          "RoomTypeEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoomTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/room-type/update": {
+      "put": {
+        "tags": [
+          "RoomTypeEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoomTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/room-type/delete": {
+      "delete": {
+        "tags": [
+          "RoomTypeEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/service/get-all": {
+      "get": {
+        "tags": [
+          "ServiceEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/service/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "ServiceEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/service/create": {
+      "post": {
+        "tags": [
+          "ServiceEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateServiceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/service/update": {
+      "put": {
+        "tags": [
+          "ServiceEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateServiceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/master/service/delete": {
+      "delete": {
+        "tags": [
+          "ServiceEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/user/get-all": {
+      "get": {
+        "tags": [
+          "UserEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserIEnumerableApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/user/get-by-id/{id}": {
+      "get": {
+        "tags": [
+          "UserEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserByIdApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/user/create": {
+      "post": {
+        "tags": [
+          "UserEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/user/update": {
+      "put": {
+        "tags": [
+          "UserEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/surety/user/delete": {
+      "delete": {
+        "tags": [
+          "UserEndpoints"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApplicationResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddPermissionToRole": {
+        "type": "object",
+        "properties": {
+          "permissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "roleId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BloodType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BloodTypeApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/BloodType"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BloodTypeIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BloodType"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Bonus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "sessions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BonusApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/Bonus"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BonusIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Bonus"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Bundle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BundleApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/Bundle"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BundleIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Bundle"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Companion": {
+        "required": [
+          "identification",
+          "identificationTypeId",
+          "names",
+          "surnames"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identificationTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identificationTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "identification": {
+            "type": "string",
+            "nullable": true
+          },
+          "names": {
+            "type": "string",
+            "nullable": true
+          },
+          "surnames": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "relationship": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompanionApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/Companion"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompanionIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Companion"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateBloodTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateBonusRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "sessions": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateBundleRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateCompanionRequest": {
+        "type": "object",
+        "properties": {
+          "identificationTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identification": {
+            "type": "string",
+            "nullable": true
+          },
+          "names": {
+            "type": "string",
+            "nullable": true
+          },
+          "surnames": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "relationship": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateCustomerRequest": {
+        "type": "object",
+        "properties": {
+          "identificationTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identification": {
+            "type": "string",
+            "nullable": true
+          },
+          "names": {
+            "type": "string",
+            "nullable": true
+          },
+          "surnames": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "bloodTypeId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateEmployeeTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateGenderRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateIdentificationTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateJobTitleRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateNoveltyTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateProductRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateProfessionalRequest": {
+        "type": "object",
+        "properties": {
+          "identificationTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identification": {
+            "type": "string",
+            "nullable": true
+          },
+          "names": {
+            "type": "string",
+            "nullable": true
+          },
+          "surnames": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateRoleRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateRoomTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateServiceRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateUserRequest": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "roleId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Customer": {
+        "required": [
+          "identification",
+          "identificationTypeId",
+          "names",
+          "surnames"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identificationTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identificationTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "identification": {
+            "type": "string",
+            "nullable": true
+          },
+          "names": {
+            "type": "string",
+            "nullable": true
+          },
+          "surnames": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "bloodTypeId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "bloodTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Customer"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatabaseInformation": {
+        "required": [
+          "schema",
+          "user",
+          "version"
+        ],
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "type": "string",
+            "nullable": true
+          },
+          "schema": {
+            "type": "string",
+            "nullable": true
+          },
+          "isSameUser": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatabaseInformationApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/DatabaseInformation"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmployeeType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmployeeTypeApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/EmployeeType"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmployeeTypeIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmployeeType"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Gender": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GenderApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GenderIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Gender"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdentificationType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdentificationTypeApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/IdentificationType"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdentificationTypeIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentificationType"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobTitle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobTitleApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/JobTitle"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobTitleIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JobTitle"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tokenType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginResponseApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/LoginResponse"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ManageRolePermissionsRequest": {
+        "type": "object",
+        "properties": {
+          "permissionsToAdd": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddPermissionToRole"
+            },
+            "nullable": true
+          },
+          "permissionsToRemove": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RemovePermissionFromRole"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NoveltyType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NoveltyTypeApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/NoveltyType"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NoveltyTypeIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NoveltyType"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Professional": {
+        "required": [
+          "identification",
+          "identificationTypeId",
+          "names",
+          "surnames"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identificationTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identificationTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "identification": {
+            "type": "string",
+            "nullable": true
+          },
+          "names": {
+            "type": "string",
+            "nullable": true
+          },
+          "surnames": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProfessionalApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/Professional"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProfessionalIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Professional"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RemovePermissionFromRole": {
+        "type": "object",
+        "properties": {
+          "rolePermissionId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResultStatus": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ResultStatusResultError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ResultStatus"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Role": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoleApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/Role"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoleIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RolePermissionView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "permissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "roleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "permissionName": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RolePermissionViewIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolePermissionView"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoomType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoomTypeApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/RoomType"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoomTypeIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomType"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ServiceApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/Service"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ServiceIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Service"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StringApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StringIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBloodTypeRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBonusRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "sessions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBundleRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateCompanionRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identificationTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identification": {
+            "type": "string",
+            "nullable": true
+          },
+          "names": {
+            "type": "string",
+            "nullable": true
+          },
+          "surnames": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "relationship": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateCustomerRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identificationTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identification": {
+            "type": "string",
+            "nullable": true
+          },
+          "names": {
+            "type": "string",
+            "nullable": true
+          },
+          "surnames": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "bloodTypeId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateEmployeeTypeRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateGenderRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateIdentificationTypeRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateJobTitleRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateNoveltyTypeRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateProductRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateProfessionalRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identificationTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "identification": {
+            "type": "string",
+            "nullable": true
+          },
+          "names": {
+            "type": "string",
+            "nullable": true
+          },
+          "surnames": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateRoleRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateRoomTypeRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateServiceRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "roleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "roleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserById": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "roleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserByIdApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/UserById"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserIEnumerableApplicationResult": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "error": {
+            "$ref": "#/components/schemas/ResultStatusResultError"
+          },
+          "advisories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Please provide a valid token",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
