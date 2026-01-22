@@ -1,0 +1,111 @@
+<div class="flex flex-col gap-4">
+  <!-- Form Panel -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">
+        {{ isEditMode ? 'Editar Bono' : 'Nuevo Bono' }}
+      </h3>
+    </ng-template>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="flex flex-col gap-2">
+          <label for="name" class="font-medium">Nombre</label>
+          <input id="name" type="text" pInputText formControlName="name" placeholder="Ingrese el nombre" class="w-full"
+            [class.ng-invalid]="form.controls.name.invalid && form.controls.name.touched" />
+          @if (form.controls.name.invalid && form.controls.name.touched) {
+            <small class="text-red-500">El nombre es requerido</small>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="description" class="font-medium">Descripción</label>
+          <textarea id="description" pTextarea formControlName="description" placeholder="Ingrese la descripción"
+            class="w-full" rows="1"></textarea>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="sessions" class="font-medium">Número de Sesiones</label>
+          <p-inputnumber id="sessions" formControlName="sessions" [min]="1" [showButtons]="true"
+            placeholder="Ingrese el número de sesiones" class="w-full" inputStyleClass="w-full"
+            [class.ng-invalid]="form.controls.sessions.invalid && form.controls.sessions.touched" />
+          @if (form.controls.sessions.invalid && form.controls.sessions.touched) {
+            <small class="text-red-500">El número de sesiones es requerido</small>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="price" class="font-medium">Precio</label>
+          <p-inputnumber id="price" formControlName="price" mode="currency" currency="COP" locale="es-CO"
+            placeholder="Ingrese el precio" class="w-full" inputStyleClass="w-full"
+            [class.ng-invalid]="form.controls.price.invalid && form.controls.price.touched" />
+          @if (form.controls.price.invalid && form.controls.price.touched) {
+            <small class="text-red-500">El precio es requerido</small>
+          }
+        </div>
+      </div>
+    </form>
+
+    <ng-template #footer>
+      <section class="flex gap-2">
+        <p-button type="submit" [label]="isEditMode ? 'Actualizar' : 'Guardar'" [loading]="loading()"
+          [severity]="isEditMode ? 'success' : 'primary'" (onClick)="onSubmit()">
+          <ng-template #icon>
+            <span class="material-symbols-outlined">{{ isEditMode ? 'edit' : 'save' }}</span>
+          </ng-template>
+        </p-button>
+
+        @if (isEditMode) {
+          <p-button label="Eliminar" severity="danger" [loading]="loading()" (onClick)="onDelete()">
+            <ng-template #icon>
+              <span class="material-symbols-outlined">delete</span>
+            </ng-template>
+          </p-button>
+
+          <p-button label="Cancelar" severity="secondary" [outlined]="true" (onClick)="onClear()">
+            <ng-template #icon>
+              <span class="material-symbols-outlined">close</span>
+            </ng-template>
+          </p-button>
+        }
+      </section>
+    </ng-template>
+  </p-panel>
+
+  <!-- Table Panel -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">Bonos</h3>
+    </ng-template>
+
+    <p-table [value]="bonuses()" [loading]="loadingTable()" [paginator]="bonuses().length > 10" [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" selectionMode="single"
+      [(selection)]="selectedBonus" (onRowSelect)="onRowSelect($event)" [tableStyle]="{ 'min-width': '50rem' }"
+      class="p-datatable-striped">
+      <ng-template #header>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Sesiones</th>
+          <th>Precio</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-item>
+        <tr [pSelectableRow]="item">
+          <td>{{ item.name }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.sessions }}</td>
+          <td>{{ item.price | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
+        </tr>
+      </ng-template>
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="4" class="text-center p-4">
+            <span class="text-surface-500">No hay bonos registrados</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+</div>

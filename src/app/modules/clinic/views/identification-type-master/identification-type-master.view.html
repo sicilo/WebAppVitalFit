@@ -1,0 +1,87 @@
+<div class="flex flex-col gap-4">
+  <!-- Form Panel -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">
+        {{ isEditMode ? 'Editar Tipo de Identificación' : 'Nuevo Tipo de Identificación' }}
+      </h3>
+    </ng-template>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+          <label for="name" class="font-medium">Nombre</label>
+          <input id="name" type="text" pInputText formControlName="name" placeholder="Ingrese el nombre" class="w-full"
+            [class.ng-invalid]="form.controls.name.invalid && form.controls.name.touched" />
+          @if (form.controls.name.invalid && form.controls.name.touched) {
+          <small class="text-red-500">El nombre es requerido</small>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="description" class="font-medium">Descripción</label>
+          <textarea id="description" pTextarea formControlName="description" placeholder="Ingrese la descripción"
+            class="w-full" rows="1"></textarea>
+        </div>
+      </div>
+    </form>
+
+    <ng-template #footer>
+      <section class="flex gap-2">
+        <p-button type="submit" [label]="isEditMode ? 'Actualizar' : 'Guardar'" [loading]="loading()"
+          [severity]="isEditMode ? 'success' : 'primary'" (onClick)="onSubmit()">
+          <ng-template #icon>
+            <span class="material-symbols-outlined">{{ isEditMode ? 'edit' : 'save' }}</span>
+          </ng-template>
+        </p-button>
+
+        @if (isEditMode) {
+        <p-button label="Eliminar" severity="danger" [loading]="loading()" (onClick)="onDelete()">
+          <ng-template #icon>
+            <span class="material-symbols-outlined">delete</span>
+          </ng-template>
+        </p-button>
+
+        <p-button label="Cancelar" severity="secondary" [outlined]="true" (onClick)="onClear()">
+          <ng-template #icon>
+            <span class="material-symbols-outlined">close</span>
+          </ng-template>
+        </p-button>
+        }
+      </section>
+    </ng-template>
+  </p-panel>
+
+  <!-- Table Panel -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">Tipos de Identificación</h3>
+    </ng-template>
+
+    <p-table [value]="identificationTypes()" [loading]="loadingTable()" [paginator]="identificationTypes().length > 10"
+      [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" selectionMode="single"
+      [(selection)]="selectedIdentificationType" (onRowSelect)="onRowSelect($event)"
+      [tableStyle]="{ 'min-width': '40rem' }" class="p-datatable-striped">
+      <ng-template #header>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-item>
+        <tr [pSelectableRow]="item">
+          <td>{{ item.name }}</td>
+          <td>{{ item.description }}</td>
+        </tr>
+      </ng-template>
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="2" class="text-center p-4">
+            <span class="text-surface-500">No hay tipos de identificación registrados</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+</div>
