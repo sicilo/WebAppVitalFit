@@ -56,7 +56,7 @@ export class RoomTypeMasterView implements OnInit {
       },
       error: () => {
         this.loadingTable.set(false);
-        this.toastService.error('Error al cargar los tipos de sala');
+        this.toastService.error('Error al cargar los tipos de Cabina');
       },
     });
   }
@@ -101,7 +101,7 @@ export class RoomTypeMasterView implements OnInit {
           next: (response) => {
             this.loading.set(false);
             if (response.value) {
-              this.toastService.success('Tipo de sala actualizado exitosamente');
+              this.toastService.success('Tipo de Cabina actualizado exitosamente');
               this.loadRoomTypes();
               this.onClear();
             } else if (response.error) {
@@ -110,7 +110,7 @@ export class RoomTypeMasterView implements OnInit {
           },
           error: () => {
             this.loading.set(false);
-            this.toastService.error('Error al actualizar el tipo de sala');
+            this.toastService.error('Error al actualizar el tipo de Cabina');
           },
         });
     } else {
@@ -123,7 +123,7 @@ export class RoomTypeMasterView implements OnInit {
           next: (response) => {
             this.loading.set(false);
             if (response.value) {
-              this.toastService.success('Tipo de sala creado exitosamente');
+              this.toastService.success('Tipo de Cabina creado exitosamente');
               this.loadRoomTypes();
               this.onClear();
             } else if (response.error) {
@@ -132,7 +132,7 @@ export class RoomTypeMasterView implements OnInit {
           },
           error: () => {
             this.loading.set(false);
-            this.toastService.error('Error al crear el tipo de sala');
+            this.toastService.error('Error al crear el tipo de Cabina');
           },
         });
     }
@@ -147,7 +147,7 @@ export class RoomTypeMasterView implements OnInit {
       next: (response) => {
         this.loading.set(false);
         if (response.value) {
-          this.toastService.success('Tipo de sala eliminado exitosamente');
+          this.toastService.success('Tipo de Cabina eliminado exitosamente');
           this.loadRoomTypes();
           this.onClear();
         } else if (response.error) {
@@ -156,7 +156,7 @@ export class RoomTypeMasterView implements OnInit {
       },
       error: () => {
         this.loading.set(false);
-        this.toastService.error('Error al eliminar el tipo de sala');
+        this.toastService.error('Error al eliminar el tipo de Cabina');
       },
     });
   }

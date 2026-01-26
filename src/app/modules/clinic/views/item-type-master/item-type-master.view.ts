@@ -1,91 +1,83 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { TextareaModule } from 'primeng/textarea';
 import { TableModule, TableRowSelectEvent } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
 import { TooltipModule } from 'primeng/tooltip';
-import { BonusService } from '../../../../core/services/bonus.service';
+import { ItemTypeService } from '../../../../core/services/item-type.service';
 import { ToastService } from '../../../../core/services/toast.service';
-import { Bonus } from '../../../../core/models/bonus.model';
+import { ItemType } from '../../../../core/models/item-type.model';
 
 @Component({
-  selector: 'app-bonus-master',
+  selector: 'app-item-type-master',
   standalone: true,
   imports: [
-    CurrencyPipe,
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
-    InputNumberModule,
     TextareaModule,
     TableModule,
     PanelModule,
     TooltipModule,
   ],
-  templateUrl: './bonus-master.view.html',
+  templateUrl: './item-type-master.view.html',
 })
-export class BonusMasterView implements OnInit {
+export class ItemTypeMasterView implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly bonusService = inject(BonusService);
+  private readonly itemTypeService = inject(ItemTypeService);
   private readonly toastService = inject(ToastService);
 
-  protected readonly bonuses = signal<Bonus[]>([]);
-  protected readonly selectedBonus = signal<Bonus | null>(null);
+  protected readonly itemTypes = signal<ItemType[]>([]);
+  protected readonly selectedItemType = signal<ItemType | null>(null);
   protected readonly loading = signal(false);
   protected readonly loadingTable = signal(false);
 
   protected readonly form = this.fb.nonNullable.group({
     name: ['', Validators.required],
     description: [''],
-    sessions: [1, [Validators.required, Validators.min(1)]],
-    price: [0, [Validators.required, Validators.min(0)]],
   });
 
   ngOnInit(): void {
-    this.loadBonuses();
+    this.loadItemTypes();
   }
 
-  private loadBonuses(): void {
+  private loadItemTypes(): void {
     this.loadingTable.set(true);
-    this.bonusService.getAll().subscribe({
+    this.itemTypeService.getAll().subscribe({
       next: (response) => {
         this.loadingTable.set(false);
         if (response.value) {
-          this.bonuses.set(response.value);
+          this.itemTypes.set(response.value);
         } else if (response.error) {
           this.toastService.error(response.error.message);
         }
       },
       error: () => {
         this.loadingTable.set(false);
-        this.toastService.error('Error al cargar los bonos');
+        this.toastService.error('Error al cargar los tipos de artículo');
       },
     });
   }
 
-  onRowSelect(selectionEvent: TableRowSelectEvent<Bonus>): void {
-    const bonus = selectionEvent.data;
+  onRowSelect(selectionEvent: TableRowSelectEvent<ItemType>): void {
+    const itemType = selectionEvent.data;
 
-    if (!bonus || Array.isArray(bonus)) {
+    if (!itemType || Array.isArray(itemType)) {
       return;
     }
 
-    this.selectedBonus.set(bonus);
+    this.selectedItemType.set(itemType);
     this.form.patchValue({
-      name: bonus.name,
-      description: bonus.description ?? '',
-      sessions: bonus.sessions ?? 1,
-      price: bonus.price ?? 0,
+      name: itemType.name,
+      description: itemType.description ?? '',
     });
   }
 
   onClear(): void {
-    this.selectedBonus.set(null);
-    this.form.reset({ name: '', description: '', sessions: 1, price: 0 });
+    this.selectedItemType.set(null);
+    this.form.reset();
   }
 
   onSubmit(): void {
@@ -96,23 +88,21 @@ export class BonusMasterView implements OnInit {
 
     this.loading.set(true);
     const formValue = this.form.getRawValue();
-    const selected = this.selectedBonus();
+    const selected = this.selectedItemType();
 
     if (selected) {
-      this.bonusService
+      this.itemTypeService
         .update({
           id: selected.id,
           name: formValue.name,
           description: formValue.description,
-          sessions: formValue.sessions,
-          price: formValue.price,
         })
         .subscribe({
           next: (response) => {
             this.loading.set(false);
             if (response.value) {
-              this.toastService.success('Bono actualizado exitosamente');
-              this.loadBonuses();
+              this.toastService.success('Tipo de artículo actualizado exitosamente');
+              this.loadItemTypes();
               this.onClear();
             } else if (response.error) {
               this.toastService.error(response.error.message);
@@ -120,23 +110,21 @@ export class BonusMasterView implements OnInit {
           },
           error: () => {
             this.loading.set(false);
-            this.toastService.error('Error al actualizar el bono');
+            this.toastService.error('Error al actualizar el tipo de artículo');
           },
         });
     } else {
-      this.bonusService
+      this.itemTypeService
         .create({
           name: formValue.name,
           description: formValue.description,
-          sessions: formValue.sessions,
-          price: formValue.price,
         })
         .subscribe({
           next: (response) => {
             this.loading.set(false);
             if (response.value) {
-              this.toastService.success('Bono creado exitosamente');
-              this.loadBonuses();
+              this.toastService.success('Tipo de artículo creado exitosamente');
+              this.loadItemTypes();
               this.onClear();
             } else if (response.error) {
               this.toastService.error(response.error.message);
@@ -144,23 +132,23 @@ export class BonusMasterView implements OnInit {
           },
           error: () => {
             this.loading.set(false);
-            this.toastService.error('Error al crear el bono');
+            this.toastService.error('Error al crear el tipo de artículo');
           },
         });
     }
   }
 
   onDelete(): void {
-    const selected = this.selectedBonus();
+    const selected = this.selectedItemType();
     if (!selected) return;
 
     this.loading.set(true);
-    this.bonusService.delete(selected.id).subscribe({
+    this.itemTypeService.delete(selected.id).subscribe({
       next: (response) => {
         this.loading.set(false);
         if (response.value) {
-          this.toastService.success('Bono eliminado exitosamente');
-          this.loadBonuses();
+          this.toastService.success('Tipo de artículo eliminado exitosamente');
+          this.loadItemTypes();
           this.onClear();
         } else if (response.error) {
           this.toastService.error(response.error.message);
@@ -168,12 +156,12 @@ export class BonusMasterView implements OnInit {
       },
       error: () => {
         this.loading.set(false);
-        this.toastService.error('Error al eliminar el bono');
+        this.toastService.error('Error al eliminar el tipo de artículo');
       },
     });
   }
 
   get isEditMode(): boolean {
-    return this.selectedBonus() !== null;
+    return this.selectedItemType() !== null;
   }
 }

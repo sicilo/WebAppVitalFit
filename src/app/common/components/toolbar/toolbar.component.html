@@ -7,15 +7,24 @@
   </ng-template>
 
   <ng-template #end>
-    <p-button [rounded]="true" [text]="true" severity="secondary" (click)="toggleTheme()"
-      [pTooltip]="themeService.isDarkMode() ? 'Light mode' : 'Dark mode'">
-      <span class="material-symbols-outlined">
-        {{ themeService.isDarkMode() ? 'light_mode' : 'dark_mode' }}
-      </span>
-    </p-button>
+    <div class="flex items-center gap-2">
+      <p-button [rounded]="true" [text]="true" severity="secondary" (click)="toggleTheme()"
+        [pTooltip]="themeService.isDarkMode() ? 'Light mode' : 'Dark mode'">
+        <span class="material-symbols-outlined">
+          {{ themeService.isDarkMode() ? 'light_mode' : 'dark_mode' }}
+        </span>
+      </p-button>
 
-    <p-button [rounded]="true" [text]="true" severity="secondary" (click)="logout()" pTooltip="Logout">
-      <span class="material-symbols-outlined">logout</span>
-    </p-button>
+      @if (authService.userInfo(); as user) {
+        <div class="flex flex-col text-right mr-2">
+          <span class="font-semibold text-sm">{{ user.userName }}</span>
+          <span class="text-xs text-surface-500">{{ user.roleName }}</span>
+        </div>
+      }
+
+      <p-button [rounded]="true" [text]="true" severity="secondary" (click)="logout()" pTooltip="Cerrar sesión">
+        <span class="material-symbols-outlined">logout</span>
+      </p-button>
+    </div>
   </ng-template>
 </p-toolbar>

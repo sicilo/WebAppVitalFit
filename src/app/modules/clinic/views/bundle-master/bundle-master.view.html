@@ -3,12 +3,12 @@
   <p-panel>
     <ng-template #header>
       <h3 class="text-lg font-semibold m-0">
-        {{ isEditMode ? 'Editar Producto' : 'Nuevo Producto' }}
+        {{ isEditMode ? 'Editar Paquete' : 'Nuevo Paquete' }}
       </h3>
     </ng-template>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div class="flex flex-col gap-2">
           <label for="name" class="font-medium">Nombre</label>
           <input id="name" type="text" pInputText formControlName="name" placeholder="Ingrese el nombre" class="w-full"
@@ -65,32 +65,32 @@
   <!-- Table Panel -->
   <p-panel>
     <ng-template #header>
-      <h3 class="text-lg font-semibold m-0">Productos</h3>
+      <h3 class="text-lg font-semibold m-0">Paquetes</h3>
     </ng-template>
 
-    <p-table [value]="products()" [loading]="loadingTable()" [paginator]="products().length > 10" [rows]="10"
+    <p-table [value]="bundles()" [loading]="loadingTable()" [paginator]="bundles().length > 10" [rows]="10"
       [rowsPerPageOptions]="[10, 25, 50]" [showCurrentPageReport]="true"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" selectionMode="single"
-      [(selection)]="selectedProduct" (onRowSelect)="onRowSelect($event)" [tableStyle]="{ 'min-width': '50rem' }"
+      [(selection)]="selectedBundle" (onRowSelect)="onRowSelect($event)" [tableStyle]="{ 'min-width': '50rem' }"
       class="p-datatable-striped">
       <ng-template #header>
         <tr>
           <th>Nombre</th>
-          <th>Precio</th>
           <th>Descripción</th>
+          <th>Precio</th>
         </tr>
       </ng-template>
       <ng-template #body let-item>
         <tr [pSelectableRow]="item">
           <td>{{ item.name }}</td>
-          <td>{{ item.price | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
           <td>{{ item.description }}</td>
+          <td>{{ item.price | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
         </tr>
       </ng-template>
       <ng-template #emptymessage>
         <tr>
           <td colspan="3" class="text-center p-4">
-            <span class="text-surface-500">No hay productos registrados</span>
+            <span class="text-surface-500">No hay paquetes registrados</span>
           </td>
         </tr>
       </ng-template>

@@ -1,3 +1,160 @@
-<div>
-  <h1>Users</h1>
+<div class="flex flex-col gap-4">
+  <!-- Form Panel -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">
+        {{ isEditMode ? 'Editar Usuario' : 'Nuevo Usuario' }}
+      </h3>
+    </ng-template>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="flex flex-col gap-2">
+          <label for="userName" class="font-medium">Nombre de Usuario</label>
+          <input id="userName" type="text" pInputText formControlName="userName"
+            placeholder="Ingrese el nombre de usuario" class="w-full"
+            [class.ng-invalid]="form.controls.userName.invalid && form.controls.userName.touched" />
+          @if (form.controls.userName.invalid && form.controls.userName.touched) {
+            <small class="text-red-500">El nombre de usuario es requerido</small>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="email" class="font-medium">Correo Electrónico</label>
+          <input id="email" type="email" pInputText formControlName="email"
+            placeholder="Ingrese el correo electrónico" class="w-full"
+            [class.ng-invalid]="form.controls.email.invalid && form.controls.email.touched" />
+          @if (form.controls.email.invalid && form.controls.email.touched) {
+            @if (form.controls.email.hasError('required')) {
+              <small class="text-red-500">El correo electrónico es requerido</small>
+            } @else if (form.controls.email.hasError('email')) {
+              <small class="text-red-500">Ingrese un correo electrónico válido</small>
+            }
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="password" class="font-medium">
+            Contraseña
+            @if (isEditMode) {
+              <span class="text-surface-500 font-normal">(opcional)</span>
+            }
+          </label>
+          <p-password id="password" formControlName="password" placeholder="Ingrese la contraseña"
+            [toggleMask]="true" [feedback]="false" styleClass="w-full" inputStyleClass="w-full"
+            [class.ng-invalid]="form.controls.password.invalid && form.controls.password.touched" />
+          @if (form.controls.password.invalid && form.controls.password.touched && !isEditMode) {
+            <small class="text-red-500">La contraseña es requerida</small>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="confirmPassword" class="font-medium">
+            Confirmar Contraseña
+            @if (isEditMode) {
+              <span class="text-surface-500 font-normal">(opcional)</span>
+            }
+          </label>
+          <p-password id="confirmPassword" formControlName="confirmPassword"
+            placeholder="Confirme la contraseña" [toggleMask]="true" [feedback]="false"
+            styleClass="w-full" inputStyleClass="w-full"
+            [class.ng-invalid]="form.controls.confirmPassword.invalid && form.controls.confirmPassword.touched" />
+          @if (form.controls.confirmPassword.invalid && form.controls.confirmPassword.touched && !isEditMode) {
+            <small class="text-red-500">La confirmación de contraseña es requerida</small>
+          }
+          @if (form.hasError('passwordMismatch') && form.controls.confirmPassword.touched) {
+            <small class="text-red-500">Las contraseñas no coinciden</small>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="roleId" class="font-medium">Rol</label>
+          <p-select id="roleId" formControlName="roleId" [options]="roles()" optionLabel="name"
+            optionValue="id" placeholder="Seleccione un rol" class="w-full" styleClass="w-full"
+            [class.ng-invalid]="form.controls.roleId.invalid && form.controls.roleId.touched" />
+          @if (form.controls.roleId.invalid && form.controls.roleId.touched) {
+            <small class="text-red-500">El rol es requerido</small>
+          }
+        </div>
+      </div>
+    </form>
+
+    <ng-template #footer>
+      <section class="flex gap-2">
+        <p-button type="submit" [label]="isEditMode ? 'Actualizar' : 'Guardar'" [loading]="loading()"
+          [severity]="isEditMode ? 'success' : 'primary'" (onClick)="onSubmit()">
+          <ng-template #icon>
+            <span class="material-symbols-outlined">{{ isEditMode ? 'edit' : 'save' }}</span>
+          </ng-template>
+        </p-button>
+
+        @if (isEditMode) {
+          <p-button label="Eliminar" severity="danger" [loading]="loading()" (onClick)="onDelete()">
+            <ng-template #icon>
+              <span class="material-symbols-outlined">delete</span>
+            </ng-template>
+          </p-button>
+
+          <p-button label="Cancelar" severity="secondary" [outlined]="true" (onClick)="onClear()">
+            <ng-template #icon>
+              <span class="material-symbols-outlined">close</span>
+            </ng-template>
+          </p-button>
+        }
+      </section>
+    </ng-template>
+  </p-panel>
+
+  <!-- Table Panel -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">Usuarios</h3>
+    </ng-template>
+
+    <p-table [value]="users()" [loading]="loadingTable()" [paginator]="users().length > 10" [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" selectionMode="single"
+      [(selection)]="selectedUser" (onRowSelect)="onRowSelect($event)" [tableStyle]="{ 'min-width': '50rem' }"
+      class="p-datatable-striped">
+      <ng-template #header>
+        <tr>
+          <th>Nombre de Usuario</th>
+          <th>Correo Electrónico</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th class="w-24 text-center">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-item>
+        <tr [pSelectableRow]="item">
+          <td>{{ item.userName }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.roleName }}</td>
+          <td>
+            <p-tag [value]="item.status ? 'Activo' : 'Inactivo'"
+              [severity]="item.status ? 'success' : 'danger'" />
+          </td>
+          <td class="text-center">
+            <p-button [rounded]="true" [text]="true" [loading]="togglingUserId() === item.id"
+              [severity]="item.status ? 'danger' : 'success'"
+              [pTooltip]="item.status ? 'Desactivar usuario' : 'Activar usuario'"
+              tooltipPosition="top" (onClick)="onToggleStatus(item, $event)">
+              <ng-template #icon>
+                <span class="material-symbols-outlined">
+                  {{ item.status ? 'person_off' : 'person_check' }}
+                </span>
+              </ng-template>
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="5" class="text-center p-4">
+            <span class="text-surface-500">No hay usuarios registrados</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
 </div>

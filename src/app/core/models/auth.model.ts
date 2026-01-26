@@ -9,3 +9,11 @@ export interface LoginResponse {
   expiresAt: string;
   tokenType: string;
 }
+
+export interface UserInfo {
+  id: string;
+  userName: string;
+  email: string;
+  roleId: string;
+  roleName: string;
+}

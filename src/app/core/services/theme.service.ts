@@ -40,8 +40,10 @@ export class ThemeService {
 
     if (isDark) {
       html.classList.add('dark-mode');
+      html.classList.add('dark');
     } else {
       html.classList.remove('dark-mode');
+      html.classList.remove('dark');
     }
   }
 

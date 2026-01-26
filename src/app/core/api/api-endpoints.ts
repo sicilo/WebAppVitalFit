@@ -1,6 +1,7 @@
 export const API_ENDPOINTS = {
   // Surety - Authentication
   auth: {
+    userInfo: '/api/surety/auth/get/user-information',
     login: '/api/surety/auth/login',
   },
 
@@ -47,6 +48,14 @@ export const API_ENDPOINTS = {
     delete: '/api/clinic/customer/delete',
   },
 
+  // Clinic - Person
+  person: {
+    getPaged: '/api/clinic/person/get-paged',
+    getById: '/api/clinic/person/get-by-id', // + /{id}
+    create: '/api/clinic/person/create',
+    update: '/api/clinic/person/update',
+  },
+
   // Clinic - Professional
   professional: {
     getAll: '/api/clinic/professional/get-all',
@@ -65,15 +74,6 @@ export const API_ENDPOINTS = {
     delete: '/api/master/blood-type/delete',
   },
 
-  // Master - Bonus
-  bonus: {
-    getAll: '/api/master/bonus/get-all',
-    getById: '/api/master/bonus/get-by-id', // + /{id}
-    create: '/api/master/bonus/create',
-    update: '/api/master/bonus/update',
-    delete: '/api/master/bonus/delete',
-  },
-
   // Master - Bundle
   bundle: {
     getAll: '/api/master/bundle/get-all',
@@ -83,13 +83,13 @@ export const API_ENDPOINTS = {
     delete: '/api/master/bundle/delete',
   },
 
-  // Master - Employee Type
-  employeeType: {
-    getAll: '/api/master/employee-type/get-all',
-    getById: '/api/master/employee-type/get-by-id', // + /{id}
-    create: '/api/master/employee-type/create',
-    update: '/api/master/employee-type/update',
-    delete: '/api/master/employee-type/delete',
+  // Master - Item Type
+  itemType: {
+    getAll: '/api/masters/item-type/get-all',
+    getById: '/api/masters/item-type/get-by-id', // + /{id}
+    create: '/api/masters/item-type/create',
+    update: '/api/masters/item-type/update',
+    delete: '/api/masters/item-type/delete',
   },
 
   // Master - Gender
@@ -119,24 +119,6 @@ export const API_ENDPOINTS = {
     delete: '/api/master/job-title/delete',
   },
 
-  // Master - Novelty Type
-  noveltyType: {
-    getAll: '/api/master/novelty-type/get-all',
-    getById: '/api/master/novelty-type/get-by-id', // + /{id}
-    create: '/api/master/novelty-type/create',
-    update: '/api/master/novelty-type/update',
-    delete: '/api/master/novelty-type/delete',
-  },
-
-  // Master - Product
-  product: {
-    getAll: '/api/master/product/get-all',
-    getById: '/api/master/product/get-by-id', // + /{id}
-    create: '/api/master/product/create',
-    update: '/api/master/product/update',
-    delete: '/api/master/product/delete',
-  },
-
   // Master - Room Type
   roomType: {
     getAll: '/api/master/room-type/get-all',
@@ -144,15 +126,6 @@ export const API_ENDPOINTS = {
     create: '/api/master/room-type/create',
     update: '/api/master/room-type/update',
     delete: '/api/master/room-type/delete',
-  },
-
-  // Master - Service
-  service: {
-    getAll: '/api/master/service/get-all',
-    getById: '/api/master/service/get-by-id', // + /{id}
-    create: '/api/master/service/create',
-    update: '/api/master/service/update',
-    delete: '/api/master/service/delete',
   },
 
   // Information

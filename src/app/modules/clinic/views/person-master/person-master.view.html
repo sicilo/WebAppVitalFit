@@ -1,0 +1,220 @@
+<div class="flex flex-col gap-4">
+  <!-- Form Panel -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">
+        {{ isEditMode ? 'Editar Persona' : 'Nueva Persona' }}
+      </h3>
+    </ng-template>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Identification Type -->
+        <div class="flex flex-col gap-2">
+          <label for="identificationTypeId" class="font-medium">Tipo de Identificación</label>
+          <p-select id="identificationTypeId" formControlName="identificationTypeId" [options]="identificationTypes()"
+            optionValue="id" placeholder="Seleccione tipo" class="w-full" styleClass="w-full"
+            [class.ng-invalid]="form.controls.identificationTypeId.invalid && form.controls.identificationTypeId.touched">
+            <ng-template #selectedItem let-selected>
+              <span>{{ selected.name }} - {{ selected.description }}</span>
+            </ng-template>
+            <ng-template #item let-item>
+              <span>{{ item.name }} - {{ item.description }}</span>
+            </ng-template>
+          </p-select>
+          @if (form.controls.identificationTypeId.invalid && form.controls.identificationTypeId.touched) {
+          <small class="text-red-500">El tipo de identificación es requerido</small>
+          }
+        </div>
+
+        <!-- Identification -->
+        <div class="flex flex-col gap-2">
+          <label for="identification" class="font-medium">Identificación</label>
+          <input id="identification" type="text" pInputText formControlName="identification"
+            placeholder="Ingrese la identificación" class="w-full"
+            [class.ng-invalid]="form.controls.identification.invalid && form.controls.identification.touched" />
+          @if (form.controls.identification.invalid && form.controls.identification.touched) {
+          <small class="text-red-500">La identificación es requerida</small>
+          }
+        </div>
+
+        <!-- Names -->
+        <div class="flex flex-col gap-2">
+          <label for="names" class="font-medium">Nombres</label>
+          <input id="names" type="text" pInputText formControlName="names" placeholder="Ingrese los nombres"
+            class="w-full" [class.ng-invalid]="form.controls.names.invalid && form.controls.names.touched" />
+          @if (form.controls.names.invalid && form.controls.names.touched) {
+          <small class="text-red-500">Los nombres son requeridos</small>
+          }
+        </div>
+
+        <!-- Surnames -->
+        <div class="flex flex-col gap-2">
+          <label for="surnames" class="font-medium">Apellidos</label>
+          <input id="surnames" type="text" pInputText formControlName="surnames" placeholder="Ingrese los apellidos"
+            class="w-full" [class.ng-invalid]="form.controls.surnames.invalid && form.controls.surnames.touched" />
+          @if (form.controls.surnames.invalid && form.controls.surnames.touched) {
+          <small class="text-red-500">Los apellidos son requeridos</small>
+          }
+        </div>
+
+        <!-- Phone -->
+        <div class="flex flex-col gap-2">
+          <label for="phone" class="font-medium">Teléfono</label>
+          <input id="phone" type="text" pInputText formControlName="phone" placeholder="Ingrese el teléfono"
+            class="w-full" [class.ng-invalid]="form.controls.phone.invalid && form.controls.phone.touched" />
+          @if (form.controls.phone.invalid && form.controls.phone.touched) {
+          <small class="text-red-500">El teléfono es requerido</small>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="flex flex-col gap-2">
+          <label for="email" class="font-medium">Correo Electrónico</label>
+          <input id="email" type="email" pInputText formControlName="email" placeholder="Ingrese el correo electrónico"
+            class="w-full" [class.ng-invalid]="form.controls.email.invalid && form.controls.email.touched" />
+          @if (form.controls.email.invalid && form.controls.email.touched) {
+          @if (form.controls.email.hasError('required')) {
+          <small class="text-red-500">El correo electrónico es requerido</small>
+          } @else if (form.controls.email.hasError('email')) {
+          <small class="text-red-500">Ingrese un correo electrónico válido</small>
+          }
+          }
+        </div>
+
+        <!-- Birth Date -->
+        <div class="flex flex-col gap-2">
+          <label for="birthDate" class="font-medium">Fecha de Nacimiento</label>
+          <p-datepicker id="birthDate" formControlName="birthDate" dateFormat="dd/mm/yy" placeholder="Seleccione fecha"
+            class="w-full" styleClass="w-full" inputStyleClass="w-full" [showIcon]="true"
+            [class.ng-invalid]="form.controls.birthDate.invalid && form.controls.birthDate.touched" />
+          @if (form.controls.birthDate.invalid && form.controls.birthDate.touched) {
+          <small class="text-red-500">La fecha de nacimiento es requerida</small>
+          }
+        </div>
+
+        <!-- Checkboxes Section -->
+        <div class="flex flex-col gap-4 md:col-span-2">
+          <div class="flex gap-6">
+            <div class="flex items-center gap-2">
+              <p-checkbox formControlName="isClient" [binary]="true" inputId="isClient" />
+              <label for="isClient" class="font-medium cursor-pointer">Es Cliente</label>
+            </div>
+            <div class="flex items-center gap-2">
+              <p-checkbox formControlName="isEmployee" [binary]="true" inputId="isEmployee" />
+              <label for="isEmployee" class="font-medium cursor-pointer">Es Empleado</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Client Fields (shown when isClient is checked) -->
+        @if (isClient) {
+        <div class="flex flex-col gap-2">
+          <label for="genderId" class="font-medium">Género</label>
+          <p-select id="genderId" formControlName="genderId" [options]="genders()" optionLabel="name" optionValue="id"
+            placeholder="Seleccione género" class="w-full" styleClass="w-full" />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="bloodTypeId" class="font-medium">Tipo de Sangre</label>
+          <p-select id="bloodTypeId" formControlName="bloodTypeId" [options]="bloodTypes()" optionLabel="name"
+            optionValue="id" placeholder="Seleccione tipo de sangre" class="w-full" styleClass="w-full" />
+        </div>
+
+        <div class="flex flex-col gap-2 md:col-span-2">
+          <label for="address" class="font-medium">Dirección</label>
+          <textarea id="address" pTextarea formControlName="address" placeholder="Ingrese la dirección" class="w-full"
+            rows="1"></textarea>
+        </div>
+        }
+
+        <!-- Employee Fields (shown when isEmployee is checked) -->
+        @if (isEmployee) {
+        <div class="flex flex-col gap-2">
+          <label for="jobTitleId" class="font-medium">Cargo</label>
+          <p-select id="jobTitleId" formControlName="jobTitleId" [options]="jobTitles()" optionLabel="name"
+            optionValue="id" placeholder="Seleccione cargo" class="w-full" styleClass="w-full" />
+        </div>
+        }
+      </div>
+    </form>
+
+    <ng-template #footer>
+      <section class="flex gap-2">
+        <p-button type="submit" [label]="isEditMode ? 'Actualizar' : 'Guardar'" [loading]="loading()"
+          [severity]="isEditMode ? 'success' : 'primary'" (onClick)="onSubmit()">
+          <ng-template #icon>
+            <span class="material-symbols-outlined">{{ isEditMode ? 'edit' : 'save' }}</span>
+          </ng-template>
+        </p-button>
+
+        @if (isEditMode) {
+        <p-button label="Cancelar" severity="secondary" [outlined]="true" (onClick)="onClear()">
+          <ng-template #icon>
+            <span class="material-symbols-outlined">close</span>
+          </ng-template>
+        </p-button>
+        }
+      </section>
+    </ng-template>
+  </p-panel>
+
+  <!-- Table Panel -->
+  <p-panel>
+    <ng-template #header>
+      <div class="flex justify-between items-center w-full">
+        <h3 class="text-lg font-semibold m-0">Personas</h3>
+        <input type="text" pInputText placeholder="Buscar..." [ngModel]="search()" (ngModelChange)="onSearch($event)" />
+      </div>
+    </ng-template>
+
+    <p-table [value]="persons()" [loading]="loadingTable()" [paginator]="true" [rows]="rows()"
+      [totalRecords]="totalRecords()" [lazy]="true" (onLazyLoad)="onLazyLoad($event)"
+      [rowsPerPageOptions]="[10, 25, 50]" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" selectionMode="single"
+      [(selection)]="selectedPerson" (onRowSelect)="onRowSelect($event)" [tableStyle]="{ 'min-width': '70rem' }"
+      class="p-datatable-striped">
+      <ng-template #header>
+        <tr>
+          <th>Identificación</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Teléfono</th>
+          <th>Correo</th>
+          <th>Es Cliente</th>
+          <th>Es Empleado</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-item>
+        <tr [pSelectableRow]="item">
+          <td>{{ item.identificationTypeName }} {{ item.identification }}</td>
+          <td>{{ item.names }}</td>
+          <td>{{ item.surnames }}</td>
+          <td>{{ item.phone }}</td>
+          <td>{{ item.email }}</td>
+          <td>
+            @if (item.isClient) {
+            <span class="text-green-500">Sí</span>
+            } @else {
+            <span class="text-red-500">No</span>
+            }
+          </td>
+          <td>
+            @if (item.isEmployee) {
+            <span class="text-green-500">Sí</span>
+            } @else {
+            <span class="text-red-500">No</span>
+            }
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="7" class="text-center p-4">
+            <span class="text-surface-500">No hay personas registradas</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+</div>

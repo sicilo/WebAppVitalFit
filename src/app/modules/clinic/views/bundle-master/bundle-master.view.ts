@@ -8,12 +8,12 @@ import { TextareaModule } from 'primeng/textarea';
 import { TableModule, TableRowSelectEvent } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
 import { TooltipModule } from 'primeng/tooltip';
-import { ServiceService } from '../../../../core/services/service.service';
+import { BundleService } from '../../../../core/services/bundle.service';
 import { ToastService } from '../../../../core/services/toast.service';
-import { Service } from '../../../../core/models/service.model';
+import { Bundle } from '../../../../core/models/bundle.model';
 
 @Component({
-  selector: 'app-service-master',
+  selector: 'app-bundle-master',
   standalone: true,
   imports: [
     CurrencyPipe,
@@ -26,64 +26,64 @@ import { Service } from '../../../../core/models/service.model';
     PanelModule,
     TooltipModule,
   ],
-  templateUrl: './service-master.view.html',
+  templateUrl: './bundle-master.view.html',
 })
-export class ServiceMasterView implements OnInit {
+export class BundleMasterView implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly serviceService = inject(ServiceService);
+  private readonly bundleService = inject(BundleService);
   private readonly toastService = inject(ToastService);
 
-  protected readonly services = signal<Service[]>([]);
-  protected readonly selectedService = signal<Service | null>(null);
+  protected readonly bundles = signal<Bundle[]>([]);
+  protected readonly selectedBundle = signal<Bundle | null>(null);
   protected readonly loading = signal(false);
   protected readonly loadingTable = signal(false);
 
   protected readonly form = this.fb.nonNullable.group({
     name: ['', Validators.required],
-    price: [0, [Validators.required, Validators.min(0)]],
     description: [''],
+    price: [0, [Validators.required, Validators.min(0)]],
   });
 
   ngOnInit(): void {
-    this.loadServices();
+    this.loadBundles();
   }
 
-  private loadServices(): void {
+  private loadBundles(): void {
     this.loadingTable.set(true);
-    this.serviceService.getAll().subscribe({
+    this.bundleService.getAll().subscribe({
       next: (response) => {
         this.loadingTable.set(false);
         if (response.value) {
-          this.services.set(response.value);
+          this.bundles.set(response.value);
         } else if (response.error) {
           this.toastService.error(response.error.message);
         }
       },
       error: () => {
         this.loadingTable.set(false);
-        this.toastService.error('Error al cargar los servicios');
+        this.toastService.error('Error al cargar los paquetes');
       },
     });
   }
 
-  onRowSelect(selectionEvent: TableRowSelectEvent<Service>): void {
-    const service = selectionEvent.data;
+  onRowSelect(selectionEvent: TableRowSelectEvent<Bundle>): void {
+    const bundle = selectionEvent.data;
 
-    if (!service || Array.isArray(service)) {
+    if (!bundle || Array.isArray(bundle)) {
       return;
     }
 
-    this.selectedService.set(service);
+    this.selectedBundle.set(bundle);
     this.form.patchValue({
-      name: service.name,
-      price: service.price ?? 0,
-      description: service.description ?? '',
+      name: bundle.name,
+      description: bundle.description ?? '',
+      price: bundle.price ?? 0,
     });
   }
 
   onClear(): void {
-    this.selectedService.set(null);
-    this.form.reset({ name: '', price: 0, description: '' });
+    this.selectedBundle.set(null);
+    this.form.reset({ name: '', description: '', price: 0 });
   }
 
   onSubmit(): void {
@@ -94,22 +94,22 @@ export class ServiceMasterView implements OnInit {
 
     this.loading.set(true);
     const formValue = this.form.getRawValue();
-    const selected = this.selectedService();
+    const selected = this.selectedBundle();
 
     if (selected) {
-      this.serviceService
+      this.bundleService
         .update({
           id: selected.id,
           name: formValue.name,
-          price: formValue.price,
           description: formValue.description,
+          price: formValue.price,
         })
         .subscribe({
           next: (response) => {
             this.loading.set(false);
             if (response.value) {
-              this.toastService.success('Servicio actualizado exitosamente');
-              this.loadServices();
+              this.toastService.success('Paquete actualizado exitosamente');
+              this.loadBundles();
               this.onClear();
             } else if (response.error) {
               this.toastService.error(response.error.message);
@@ -117,22 +117,22 @@ export class ServiceMasterView implements OnInit {
           },
           error: () => {
             this.loading.set(false);
-            this.toastService.error('Error al actualizar el servicio');
+            this.toastService.error('Error al actualizar el paquete');
           },
         });
     } else {
-      this.serviceService
+      this.bundleService
         .create({
           name: formValue.name,
-          price: formValue.price,
           description: formValue.description,
+          price: formValue.price,
         })
         .subscribe({
           next: (response) => {
             this.loading.set(false);
             if (response.value) {
-              this.toastService.success('Servicio creado exitosamente');
-              this.loadServices();
+              this.toastService.success('Paquete creado exitosamente');
+              this.loadBundles();
               this.onClear();
             } else if (response.error) {
               this.toastService.error(response.error.message);
@@ -140,23 +140,23 @@ export class ServiceMasterView implements OnInit {
           },
           error: () => {
             this.loading.set(false);
-            this.toastService.error('Error al crear el servicio');
+            this.toastService.error('Error al crear el paquete');
           },
         });
     }
   }
 
   onDelete(): void {
-    const selected = this.selectedService();
+    const selected = this.selectedBundle();
     if (!selected) return;
 
     this.loading.set(true);
-    this.serviceService.delete(selected.id).subscribe({
+    this.bundleService.delete(selected.id).subscribe({
       next: (response) => {
         this.loading.set(false);
         if (response.value) {
-          this.toastService.success('Servicio eliminado exitosamente');
-          this.loadServices();
+          this.toastService.success('Paquete eliminado exitosamente');
+          this.loadBundles();
           this.onClear();
         } else if (response.error) {
           this.toastService.error(response.error.message);
@@ -164,12 +164,12 @@ export class ServiceMasterView implements OnInit {
       },
       error: () => {
         this.loading.set(false);
-        this.toastService.error('Error al eliminar el servicio');
+        this.toastService.error('Error al eliminar el paquete');
       },
     });
   }
 
   get isEditMode(): boolean {
-    return this.selectedService() !== null;
+    return this.selectedBundle() !== null;
   }
 }
