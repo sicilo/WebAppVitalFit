@@ -3,12 +3,11 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { API_ENDPOINTS } from '../api/api-endpoints';
-import { ApplicationResult } from '../models/api.model';
+import { ApplicationResult, PagedRequest } from '../models/api.model';
 import {
   Person,
   CreatePersonRequest,
   UpdatePersonRequest,
-  PersonPagedRequest,
   PersonPagedResult,
 } from '../models/person.model';
 
@@ -18,18 +17,17 @@ import {
 export class PersonService {
   private readonly http = inject(HttpClient);
 
-  getPaged(request: PersonPagedRequest): Observable<ApplicationResult<PersonPagedResult>> {
-    let params = new HttpParams()
-      .set('Page', request.page.toString())
-      .set('ItemsPerPage', request.itemsPerPage.toString());
-
-    if (request.search) {
-      params = params.set('Search', request.search);
-    }
+  getPaged(request: PagedRequest): Observable<ApplicationResult<PersonPagedResult>> {    
 
     return this.http.get<ApplicationResult<PersonPagedResult>>(
       `${environment.apiUrl}${API_ENDPOINTS.person.getPaged}`,
-      { params }
+      {
+        params: {
+          page: request.page.toString(),
+          itemsPerPage: request.itemsPerPage.toString(),
+          ...(request.search ? { search: request.search } : {}),
+        },
+      }
     );
   }
 

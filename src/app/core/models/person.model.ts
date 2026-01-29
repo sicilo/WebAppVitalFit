@@ -1,3 +1,5 @@
+import { PagedResult } from "./api.model";
+
 export interface Person {
   id: string;
   identificationTypeId: string;
@@ -55,13 +57,5 @@ export interface UpdatePersonRequest {
   active: boolean;
 }
 
-export interface PersonPagedRequest {
-  search?: string;
-  page: number;
-  itemsPerPage: number;
-}
-
-export interface PersonPagedResult {
-  items: Person[];
-  totalCount: number;
+export interface PersonPagedResult extends PagedResult<Person> {
 }

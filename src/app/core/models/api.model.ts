@@ -7,3 +7,14 @@ export interface ResultError {
   code: string;
   message: string;
 }
+
+export interface PagedResult<T> {
+  items: T[];
+  totalCount: number;
+}
+
+export interface PagedRequest {
+  search?: string;
+  page: number;
+  itemsPerPage: number;
+}

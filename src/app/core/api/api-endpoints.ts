@@ -83,6 +83,14 @@ export const API_ENDPOINTS = {
     delete: '/api/master/bundle/delete',
   },
 
+  // Master - Item
+  item: {
+    getPaged: '/api/clinic/item/get-paged',
+    create: '/api/clinic/item/create',
+    update: '/api/clinic/item/update',
+    delete: '/api/clinic/item/delete',
+  },
+
   // Master - Item Type
   itemType: {
     getAll: '/api/masters/item-type/get-all',
