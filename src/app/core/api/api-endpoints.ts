@@ -76,11 +76,17 @@ export const API_ENDPOINTS = {
 
   // Master - Bundle
   bundle: {
-    getAll: '/api/master/bundle/get-all',
-    getById: '/api/master/bundle/get-by-id', // + /{id}
-    create: '/api/master/bundle/create',
-    update: '/api/master/bundle/update',
-    delete: '/api/master/bundle/delete',
+    getAll: '/api/configuration/bundle/get-all',
+    getById: '/api/configuration/bundle/get-by-id', // + /{id}
+    create: '/api/configuration/bundle/create',
+    update: '/api/configuration/bundle/update',
+    delete: '/api/configuration/bundle/delete',
+  },
+
+  // Configuration - Bundle Items
+  bundleItems: {
+    getAll: '/api/configuration/bundle-items/get-all',
+    create: '/api/configuration/bundle-items/create',
   },
 
   // Master - Item

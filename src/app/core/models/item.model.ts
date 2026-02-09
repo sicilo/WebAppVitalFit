@@ -7,6 +7,9 @@ export interface Item {
   name: string;
   description: string;
   price: number;
+  minimumSessions: number | null;
+  duration: string | null;
+  validity: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -16,6 +19,10 @@ export interface CreateItemRequest {
   name: string;
   description: string;
   price: number;
+  isService: boolean;
+  minimumSessions?: number | null;
+  duration?: string | null;
+  validity?: string | null;
 }
 
 export interface UpdateItemRequest {
@@ -24,6 +31,10 @@ export interface UpdateItemRequest {
   name: string;
   description: string;
   price: number;
+  isService: boolean;
+  minimumSessions?: number | null;
+  duration?: string | null;
+  validity?: string | null;
 }
 
 export interface PersonPagedResult extends PagedResult<Item> {

@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TitleService } from '../../../../core/services/title.service';
 import { TabsModule } from 'primeng/tabs';
 import { ItemMasterView } from '../../views/item-master/item-master.view';
-import { BundleMasterView } from '../../views/bundle-master/bundle-master.view';
+import { BundleConfigurationView } from '../../views/bundle-configuration/bundle-configuration.view';
 
 @Component({
   selector: 'app-products-services',
@@ -10,7 +10,7 @@ import { BundleMasterView } from '../../views/bundle-master/bundle-master.view';
   imports: [
     TabsModule,
     ItemMasterView,
-    BundleMasterView,
+    BundleConfigurationView,
   ],
   templateUrl: './products-services.page.html',
 })

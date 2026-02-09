@@ -44,6 +44,28 @@
           }
         </div>
       </div>
+
+      @if (isServiceType()) {
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          <div class="flex flex-col gap-2">
+            <label for="minimumSessions" class="font-medium">Sesiones Mínimas</label>
+            <p-inputnumber id="minimumSessions" formControlName="minimumSessions"
+              placeholder="Ingrese las sesiones mínimas" class="w-full" inputStyleClass="w-full" [min]="1" />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="duration" class="font-medium">Duración (minutos)</label>
+            <p-inputnumber id="duration" formControlName="duration"
+              placeholder="Ingrese la duración en minutos" class="w-full" inputStyleClass="w-full" [min]="1" />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="validity" class="font-medium">Vigencia (días)</label>
+            <p-inputnumber id="validity" formControlName="validity"
+              placeholder="Ingrese la vigencia en días" class="w-full" inputStyleClass="w-full" [min]="1" />
+          </div>
+        </div>
+      }
     </form>
 
     <ng-template #footer>
@@ -90,6 +112,9 @@
           <th>Nombre</th>
           <th>Descripción</th>
           <th>Precio</th>
+          <th>Sesiones Mín.</th>
+          <th>Duración</th>
+          <th>Vigencia</th>
         </tr>
       </ng-template>
       <ng-template #body let-item>
@@ -98,11 +123,14 @@
           <td>{{ item.name }}</td>
           <td>{{ item.description }}</td>
           <td>{{ item.price | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
+          <td>{{ item.minimumSessions ?? '-' }}</td>
+          <td>{{ item.duration ? item.duration : '-' }}</td>
+          <td>{{ item.validity ? item.validity : '-' }}</td>
         </tr>
       </ng-template>
       <ng-template #emptymessage>
         <tr>
-          <td colspan="4" class="text-center p-4">
+          <td colspan="7" class="text-center p-4">
             <span class="text-surface-500">No hay productos o servicios registrados</span>
           </td>
         </tr>
