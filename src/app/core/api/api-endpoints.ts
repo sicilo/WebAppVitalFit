@@ -67,11 +67,11 @@ export const API_ENDPOINTS = {
 
   // Master - Blood Type
   bloodType: {
-    getAll: '/api/master/blood-type/get-all',
-    getById: '/api/master/blood-type/get-by-id', // + /{id}
-    create: '/api/master/blood-type/create',
-    update: '/api/master/blood-type/update',
-    delete: '/api/master/blood-type/delete',
+    getAll: '/api/masters/blood-type/get-all',
+    getById: '/api/masters/blood-type/get-by-id', // + /{id}
+    create: '/api/masters/blood-type/create',
+    update: '/api/masters/blood-type/update',
+    delete: '/api/masters/blood-type/delete',
   },
 
   // Master - Bundle
@@ -108,38 +108,38 @@ export const API_ENDPOINTS = {
 
   // Master - Gender
   gender: {
-    getAll: '/api/master/gender/get-all',
-    getById: '/api/master/gender/get-by-id', // + /{id}
-    create: '/api/master/gender/create',
-    update: '/api/master/gender/update',
-    delete: '/api/master/gender/delete',
+    getAll: '/api/masters/gender/get-all',
+    getById: '/api/masters/gender/get-by-id', // + /{id}
+    create: '/api/masters/gender/create',
+    update: '/api/masters/gender/update',
+    delete: '/api/masters/gender/delete',
   },
 
   // Master - Identification Type
   identificationType: {
-    getAll: '/api/master/identification-type/get-all',
-    getById: '/api/master/identification-type/get-by-id', // + /{id}
-    create: '/api/master/identification-type/create',
-    update: '/api/master/identification-type/update',
-    delete: '/api/master/identification-type/delete',
+    getAll: '/api/masters/identification-type/get-all',
+    getById: '/api/masters/identification-type/get-by-id', // + /{id}
+    create: '/api/masters/identification-type/create',
+    update: '/api/masters/identification-type/update',
+    delete: '/api/masters/identification-type/delete',
   },
 
   // Master - Job Title
   jobTitle: {
-    getAll: '/api/master/job-title/get-all',
-    getById: '/api/master/job-title/get-by-id', // + /{id}
-    create: '/api/master/job-title/create',
-    update: '/api/master/job-title/update',
-    delete: '/api/master/job-title/delete',
+    getAll: '/api/masters/job-title/get-all',
+    getById: '/api/masters/job-title/get-by-id', // + /{id}
+    create: '/api/masters/job-title/create',
+    update: '/api/masters/job-title/update',
+    delete: '/api/masters/job-title/delete',
   },
 
   // Master - Room Type
   roomType: {
-    getAll: '/api/master/room-type/get-all',
-    getById: '/api/master/room-type/get-by-id', // + /{id}
-    create: '/api/master/room-type/create',
-    update: '/api/master/room-type/update',
-    delete: '/api/master/room-type/delete',
+    getAll: '/api/masters/room-type/get-all',
+    getById: '/api/masters/room-type/get-by-id', // + /{id}
+    create: '/api/masters/room-type/create',
+    update: '/api/masters/room-type/update',
+    delete: '/api/masters/room-type/delete',
   },
 
   // Information
