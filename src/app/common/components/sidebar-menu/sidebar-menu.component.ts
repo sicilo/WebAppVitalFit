@@ -30,6 +30,11 @@ export class SidebarMenuComponent {
           matIcon: 'calendar_today',
           routerLink: '/agenda/calendar',
         },
+        {
+          label: 'Ventas',
+          matIcon: 'point_of_sale',
+          routerLink: '/agenda/sales',
+        },
       ],
     },
     {

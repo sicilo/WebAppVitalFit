@@ -1,0 +1,98 @@
+<div class="flex flex-col gap-4">
+
+  <!-- Customer -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">Nueva Venta</h3>
+    </ng-template>
+
+    <div class="flex gap-4 max-w-2xl">
+      <div class="flex flex-col gap-2">
+        <label class="font-medium">Consecutivo</label>
+        <p-inputnumber [(ngModel)]="consecutive" [min]="1" placeholder="N°..." inputStyleClass="w-28"
+          (onKeyDown)="onConsecutiveKeyDown($event)" />
+      </div>
+      <div class="flex flex-col gap-2 flex-1">
+        <label class="font-medium">Cliente</label>
+        <p-autocomplete [(ngModel)]="selectedPerson" [suggestions]="personSuggestions"
+          (completeMethod)="searchPersons($event)" optionLabel="displayName" [forceSelection]="true"
+          placeholder="Buscar cliente por nombre..." class="w-full">
+          <ng-template #option let-person>
+            <div class="flex flex-col">
+              <span class="font-medium">{{ person.displayName }}</span>
+              <small class="text-surface-500">{{ person.identification }}</small>
+            </div>
+          </ng-template>
+        </p-autocomplete>
+      </div>
+    </div>
+  </p-panel>
+
+  <!-- PickList -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">Artículos</h3>
+    </ng-template>
+
+    <p-picklist [(source)]="sourceItems" [(target)]="targetItems" sourceHeader="Disponibles"
+      targetHeader="Seleccionados" [showSourceControls]="false" [showTargetControls]="false" filterBy="name"
+      sourceFilterPlaceholder="Buscar..." targetFilterPlaceholder="Buscar..." dataKey="id" scrollHeight="350px"
+      [disabled]="loadingData()" (onMoveToTarget)="onMoveToTarget($event)">
+      <ng-template #item let-item>
+        <div class="flex items-center justify-between w-full gap-2 ">
+          <div class="flex flex-col  ">
+            <span class="font-medium truncate">{{ item.name }}</span>
+            <small class="text-surface-500">
+              {{ item.type === 'bundle' ? 'Paquete' : item.itemTypeName }}
+            </small>
+          </div>
+          @if (isInTarget(item.id)) {
+          <section class="flex gap-2 items-end " (click)="$event.stopPropagation()"
+            (keydown)="$event.stopPropagation()">
+            <div class="flex flex-col items-center gap-1">
+              <small class="font-medium">Cant.</small>
+              <p-inputnumber [(ngModel)]="item.number" [min]="1" [showButtons]="true" inputStyleClass="w-24" />
+            </div>
+            <div class="flex flex-col items-center gap-1">
+              <small class="font-medium">Precio</small>
+              <p-inputnumber [(ngModel)]="item.price" [min]="0" mode="currency" currency="COP" locale="es-CO"
+                inputStyleClass="w-32" />
+            </div>
+          </section>
+          }
+        </div>
+      </ng-template>
+    </p-picklist>
+
+    <ng-template #footer>
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <span class="text-lg font-semibold">
+          Total: {{ totalPrice | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}
+        </span>
+        <div class="flex gap-2">
+          <p-button label="Limpiar" severity="secondary" [outlined]="true" (onClick)="onClear()">
+            <ng-template #icon>
+              <span class="material-symbols-outlined">close</span>
+            </ng-template>
+          </p-button>
+          @if (loadedOrderId) {
+            <p-button label="Actualizar Venta" [loading]="saving()"
+              [disabled]="!selectedPerson || targetItems.length === 0" (onClick)="onUpdate()">
+              <ng-template #icon>
+                <span class="material-symbols-outlined">edit</span>
+              </ng-template>
+            </p-button>
+          } @else {
+            <p-button label="Registrar Venta" [loading]="saving()"
+              [disabled]="!selectedPerson || targetItems.length === 0" (onClick)="onSave()">
+              <ng-template #icon>
+                <span class="material-symbols-outlined">point_of_sale</span>
+              </ng-template>
+            </p-button>
+          }
+        </div>
+      </div>
+    </ng-template>
+  </p-panel>
+
+</div>
