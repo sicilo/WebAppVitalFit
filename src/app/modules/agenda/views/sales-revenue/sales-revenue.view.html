@@ -50,7 +50,7 @@
           <section class="flex gap-2 items-end " (click)="$event.stopPropagation()"
             (keydown)="$event.stopPropagation()">
             <div class="flex flex-col items-center gap-1">
-              <small class="font-medium">Cant.</small>
+              <small class="font-medium">{{ item.itemTypeName === 'Servicio' ? 'Sesiones' : 'Cantidad' }}</small>
               <p-inputnumber [(ngModel)]="item.number" [min]="1" [showButtons]="true" inputStyleClass="w-24" />
             </div>
             <div class="flex flex-col items-center gap-1">

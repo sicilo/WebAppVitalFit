@@ -1,14 +1,14 @@
-<p-tabs>
+<p-tabs [value]="activeTab()" (valueChange)="onTabChange($event)">
   <p-tablist>
-    <p-tab value="revenue">Ingreso de ventas</p-tab>
     <p-tab value="record">Registro de ventas</p-tab>
+    <p-tab value="revenue">Ingreso de ventas</p-tab>
   </p-tablist>
   <p-tabpanels>
     <p-tabpanel value="revenue">
-      <app-sales-revenue />
+      <app-sales-revenue [orderToLoad]="orderSelection()" />
     </p-tabpanel>
     <p-tabpanel value="record">
-      <app-sales-record />
+      <app-sales-record (orderSelected)="onOrderSelected($event)" />
     </p-tabpanel>
   </p-tabpanels>
 </p-tabs>

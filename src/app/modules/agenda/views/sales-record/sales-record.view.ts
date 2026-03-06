@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
@@ -17,11 +17,17 @@ export class SalesRecordView implements OnInit {
   private readonly serviceOrderService = inject(ServiceOrderService);
   private readonly toastService = inject(ToastService);
 
+  @Output() orderSelected = new EventEmitter<number>();
+
   protected readonly orders = signal<ServiceOrder[]>([]);
   protected readonly loading = signal(false);
 
   ngOnInit(): void {
     this.loadOrders();
+  }
+
+  onRowClick(order: ServiceOrder): void {
+    this.orderSelected.emit(order.consecutive);
   }
 
   loadOrders(): void {

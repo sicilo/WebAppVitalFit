@@ -23,7 +23,7 @@
       </tr>
     </ng-template>
     <ng-template #body let-order>
-      <tr>
+      <tr class="cursor-pointer" (click)="onRowClick(order)">
         <td>{{ order.consecutive }}</td>
         <td>{{ order.customerNames }} {{ order.customerSurnames }}</td>
         <td>{{ order.price | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>

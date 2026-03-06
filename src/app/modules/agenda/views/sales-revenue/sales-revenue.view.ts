@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { forkJoin } from 'rxjs';
@@ -52,6 +52,8 @@ export class SalesRevenueView implements OnInit {
   private readonly itemService = inject(ItemService);
   private readonly serviceOrderService = inject(ServiceOrderService);
 
+  readonly orderToLoad = input<{ consecutive: number; ts: number } | null>(null);
+
   protected readonly loadingData = signal(false);
   protected readonly saving = signal(false);
 
@@ -61,6 +63,16 @@ export class SalesRevenueView implements OnInit {
   protected personSuggestions: PersonOption[] = [];
   protected sourceItems: SalesPickListItem[] = [];
   protected targetItems: SalesPickListItem[] = [];
+
+  constructor() {
+    effect(() => {
+      const selection = this.orderToLoad();
+      if (selection !== null) {
+        this.consecutive = selection.consecutive;
+        this.loadByConsecutive();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loadSourceData();
