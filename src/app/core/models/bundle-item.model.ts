@@ -5,6 +5,7 @@ export interface BundleItem {
   itemName: string;
   itemDescription: string;
   itemAmount: number;
+  itemPrice: number;  
 }
 
 export interface SaveBundleItemsRequest {

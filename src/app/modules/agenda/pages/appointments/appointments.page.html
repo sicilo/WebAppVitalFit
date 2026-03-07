@@ -1,3 +1,14 @@
-<div>
-  <h1>Appointments</h1>
-</div>
+<p-tabs [value]="activeTab()" (valueChange)="onTabChange($event)">
+  <p-tablist>
+    <p-tab value="record">Servicios solicitados</p-tab>
+    <p-tab value="revenue">Solicitar servicios</p-tab>
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="revenue">
+      <app-sales-revenue />
+    </p-tabpanel>
+    <p-tabpanel value="record">
+      <app-sales-record />
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>

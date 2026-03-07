@@ -17,8 +17,7 @@ import {
 export class PersonService {
   private readonly http = inject(HttpClient);
 
-  getPaged(request: PagedRequest): Observable<ApplicationResult<PersonPagedResult>> {    
-
+  getPaged(request: PagedRequest & { isClient?: boolean; isEmployee?: boolean }): Observable<ApplicationResult<PersonPagedResult>> {
     return this.http.get<ApplicationResult<PersonPagedResult>>(
       `${environment.apiUrl}${API_ENDPOINTS.person.getPaged}`,
       {
@@ -26,6 +25,8 @@ export class PersonService {
           page: request.page.toString(),
           itemsPerPage: request.itemsPerPage.toString(),
           ...(request.search ? { search: request.search } : {}),
+          ...(request.isClient !== undefined ? { isClient: request.isClient.toString() } : {}),
+          ...(request.isEmployee !== undefined ? { isEmployee: request.isEmployee.toString() } : {}),
         },
       }
     );

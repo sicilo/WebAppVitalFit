@@ -1,0 +1,108 @@
+<div class="flex flex-col gap-4">
+  <!-- Form Panel -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">
+        {{ isEditMode ? 'Editar Cabina' : 'Nueva Cabina' }}
+      </h3>
+    </ng-template>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="flex flex-col gap-2">
+          <label for="roomTypeId" class="font-medium">Tipo de Cabina</label>
+          <div class="flex gap-2">
+            <p-select id="roomTypeId" formControlName="roomTypeId" [options]="roomTypes()" optionLabel="name"
+              optionValue="id" placeholder="Seleccione un tipo" class="flex-1" styleClass="w-full"
+              [class.ng-invalid]="form.controls.roomTypeId.invalid && form.controls.roomTypeId.touched" />
+            <p-button severity="secondary" [outlined]="true" (onClick)="loadRoomTypes()"
+              pTooltip="Actualizar tipos" tooltipPosition="top">
+              <ng-template #icon>
+                <span class="material-symbols-outlined">refresh</span>
+              </ng-template>
+            </p-button>
+          </div>
+          @if (form.controls.roomTypeId.invalid && form.controls.roomTypeId.touched) {
+            <small class="text-red-500">El tipo es requerido</small>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="name" class="font-medium">Nombre</label>
+          <input id="name" type="text" pInputText formControlName="name" placeholder="Ingrese el nombre"
+            class="w-full" [class.ng-invalid]="form.controls.name.invalid && form.controls.name.touched" />
+          @if (form.controls.name.invalid && form.controls.name.touched) {
+            <small class="text-red-500">El nombre es requerido</small>
+          }
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="description" class="font-medium">Descripción</label>
+          <textarea id="description" pTextarea formControlName="description" placeholder="Ingrese la descripción"
+            class="w-full" rows="1"></textarea>
+        </div>
+      </div>
+    </form>
+
+    <ng-template #footer>
+      <section class="flex gap-2">
+        <p-button type="submit" [label]="isEditMode ? 'Actualizar' : 'Guardar'" [loading]="loading()"
+          [severity]="isEditMode ? 'success' : 'primary'" (onClick)="onSubmit()">
+          <ng-template #icon>
+            <span class="material-symbols-outlined">{{ isEditMode ? 'edit' : 'save' }}</span>
+          </ng-template>
+        </p-button>
+
+        @if (isEditMode) {
+          <p-button label="Eliminar" severity="danger" [loading]="loading()" (onClick)="onDelete()">
+            <ng-template #icon>
+              <span class="material-symbols-outlined">delete</span>
+            </ng-template>
+          </p-button>
+
+          <p-button label="Cancelar" severity="secondary" [outlined]="true" (onClick)="onClear()">
+            <ng-template #icon>
+              <span class="material-symbols-outlined">close</span>
+            </ng-template>
+          </p-button>
+        }
+      </section>
+    </ng-template>
+  </p-panel>
+
+  <!-- Table Panel -->
+  <p-panel>
+    <ng-template #header>
+      <h3 class="text-lg font-semibold m-0">Cabinas</h3>
+    </ng-template>
+
+    <p-table [value]="rooms()" [loading]="loadingTable()" [paginator]="true" [rows]="rows()"
+      [totalRecords]="totalRecords()" [lazy]="true" (onLazyLoad)="onLazyLoad($event)" [first]="first()"
+      [rowsPerPageOptions]="[10, 25, 50]" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+      selectionMode="single" [(selection)]="selectedRoom" (onRowSelect)="onRowSelect($event)"
+      styleClass="p-datatable-sm">
+      <ng-template #header>
+        <tr>
+          <th>Tipo</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-room>
+        <tr [pSelectableRow]="room">
+          <td>{{ room.roomTypeName }}</td>
+          <td>{{ room.name }}</td>
+          <td>{{ room.description }}</td>
+        </tr>
+      </ng-template>
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="3" class="text-center p-4">
+            <span class="text-surface-500">No hay cabinas registradas</span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+</div>

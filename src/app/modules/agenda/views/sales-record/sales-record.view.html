@@ -2,38 +2,166 @@
   <ng-template #header>
     <div class="flex items-center justify-between w-full gap-2">
       <h3 class="text-lg font-semibold m-0">Registro de Ventas</h3>
-      <p-button severity="secondary" [outlined]="true" [rounded]="true" (onClick)="loadOrders()"
-        pTooltip="Actualizar" tooltipPosition="left">
-        <ng-template #icon>
-          <span class="material-symbols-outlined">refresh</span>
-        </ng-template>
-      </p-button>
+      <div class="flex items-center gap-2">
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-search" />
+          <input type="text" pInputText placeholder="Buscar..." [ngModel]="search()"
+            (ngModelChange)="onSearch($event)" />
+        </p-iconfield>
+        <p-button severity="secondary" [outlined]="true" [rounded]="true"
+          (onClick)="loadOrders(1, rows(), search() || undefined)" pTooltip="Actualizar" tooltipPosition="left">
+          <ng-template #icon>
+            <span class="material-symbols-outlined">refresh</span>
+          </ng-template>
+        </p-button>
+      </div>
     </div>
   </ng-template>
 
-  <p-table [value]="orders()" [loading]="loading()" [paginator]="true" [rows]="10"
-    [rowsPerPageOptions]="[10, 25, 50]" [showCurrentPageReport]="true"
-    currentPageReportTemplate="{first} - {last} de {totalRecords}" styleClass="p-datatable-sm">
+  <p-table [value]="orders()" [loading]="loading()" [paginator]="true" [rows]="rows()" [first]="first()"
+    [totalRecords]="totalRecords()" [lazy]="true" (onLazyLoad)="onLazyLoad($event)" [rowsPerPageOptions]="[10, 25, 50]"
+    [showCurrentPageReport]="true" currentPageReportTemplate="{first} - {last} de {totalRecords}"
+    styleClass="p-datatable-sm">
     <ng-template #header>
       <tr>
-        <th>Consecutivo</th>
         <th>Cliente</th>
+        <th>Servicio</th>
+        <th>Sesiones</th>
         <th>Total</th>
-        <th>Fecha</th>
+        <th>Fecha de creación</th>
+        <th></th>
       </tr>
     </ng-template>
     <ng-template #body let-order>
-      <tr class="cursor-pointer" (click)="onRowClick(order)">
-        <td>{{ order.consecutive }}</td>
-        <td>{{ order.customerNames }} {{ order.customerSurnames }}</td>
-        <td>{{ order.price | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
-        <td>{{ order.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+      <tr>
+        <td>
+          <div class="font-medium">{{ order.customerFullName }}</div>
+          <div class="text-sm text-surface-500">{{ order.customerIdentification }}</div>
+        </td>
+        <td>
+          <div class="flex items-center gap-2">
+            <span>{{ order.orderServiceName }}</span>
+          </div>
+        </td>
+        <td>
+          <div class="flex items-center gap-1">
+            <span class="font-medium">{{ order.totalTakenSessions }}</span>
+            <span class="text-surface-400">/</span>
+            <span>{{ order.totalServiceSessions }}</span>
+          </div>
+        </td>
+        <td>{{ order.orderPrice | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
+        <td>
+          <div class="flex flex-col justify-start gap-2">
+            <span>{{ order.orderCreationDate | date: 'dd/MM/yyyy HH:mm' }}</span>
+            <div>
+              <p-tag [value]="isOrderActive(order) ? 'Vigente' : 'Vencido'"
+                [severity]="isOrderActive(order) ? 'success' : 'danger'" />
+            </div>
+          </div>
+        </td>
+        <td>
+          <p-button [rounded]="true" [text]="true" severity="secondary" pTooltip="Agendar cita" tooltipPosition="left"
+            (onClick)="openAppointmentDialog(order)">
+            <ng-template #icon>
+              <span class="material-symbols-outlined">calendar_add_on</span>
+            </ng-template>
+          </p-button>
+        </td>
       </tr>
     </ng-template>
     <ng-template #emptymessage>
       <tr>
-        <td colspan="4" class="text-center text-surface-500 py-6">No hay ventas registradas</td>
+        <td colspan="6" class="text-center text-surface-500 py-6">No hay ventas registradas</td>
       </tr>
     </ng-template>
   </p-table>
 </p-panel>
+
+<p-dialog [(visible)]="dialogVisible" header="Agendar cita" [modal]="true" [style]="{ width: '480px' }"
+  [draggable]="false" [resizable]="false">
+  @if (selectedOrder(); as order) {
+  <div class="flex flex-col gap-1 pb-4 border-b border-surface-200 mb-2">
+    <span class="text-sm text-surface-500">Servicio</span>
+    <span class="font-semibold">{{ order.orderServiceName }}</span>
+    <span class="text-sm text-surface-500">{{ order.customerFullName }} · {{ order.customerIdentification }}</span>
+  </div>
+  }
+  <form [formGroup]="appointmentForm" class="flex flex-col gap-4 pt-2">
+    @if (loadingDialogData()) {
+    <div class="flex justify-center py-4">
+      <i class="pi pi-spin pi-spinner text-2xl"></i>
+    </div>
+    } @else {
+    <div class="flex flex-col gap-1">
+      <label class="font-medium text-sm">Cliente <span class="text-red-500">*</span></label>
+      <p-autocomplete [(ngModel)]="selectedPatient" [ngModelOptions]="{ standalone: true }"
+        [suggestions]="patientSuggestions()" optionLabel="fullName" (completeMethod)="searchPatients($event)"
+        (onSelect)="onPatientSelect($event.value)" (onClear)="onPatientClear()" placeholder="Buscar cliente..."
+        class="w-full" [showClear]="true" [fluid]="true">
+        <ng-template #item let-person>
+          <div class="flex flex-col">
+            <span class="font-medium">{{ person.fullName }}</span>
+            <span class="text-sm text-surface-500">{{ person.identification }}</span>
+          </div>
+        </ng-template>
+      </p-autocomplete>
+    </div>
+    <div class="flex flex-col gap-1">
+      <label class="font-medium text-sm">Cabina <span class="text-red-500">*</span></label>
+      <p-select formControlName="roomId" [options]="rooms()" optionLabel="name" optionValue="id"
+        placeholder="Seleccionar cabina" class="w-full" />
+    </div>
+    <div class="flex flex-col gap-1">
+      <label class="font-medium text-sm">Profesional <span class="text-red-500">*</span></label>
+      <p-autocomplete [(ngModel)]="selectedProfessional" [ngModelOptions]="{ standalone: true }"
+        [suggestions]="professionalSuggestions()" optionLabel="fullName" (completeMethod)="searchProfessionals($event)"
+        (onSelect)="onProfessionalSelect($event.value)" (onClear)="onProfessionalClear()"
+        placeholder="Buscar profesional..." class="w-full" [showClear]="true" [fluid]="true">
+        <ng-template #item let-person>
+          <div class="flex flex-col">
+            <span class="font-medium">{{ person.fullName }}</span>
+            <span class="text-sm text-surface-500">{{ person.identification }}</span>
+          </div>
+        </ng-template>
+      </p-autocomplete>
+    </div>
+    <div class="flex flex-col gap-1">
+      <label class="font-medium text-sm">Acompañante</label>
+      <p-autocomplete [(ngModel)]="selectedCompanion" [ngModelOptions]="{ standalone: true }"
+        [suggestions]="companionSuggestions()" optionLabel="fullName" (completeMethod)="searchCompanions($event)"
+        (onSelect)="onCompanionSelect($event.value)" (onClear)="onCompanionClear()"
+        placeholder="Buscar acompañante..." class="w-full" [showClear]="true" [fluid]="true">
+        <ng-template #item let-person>
+          <div class="flex flex-col">
+            <span class="font-medium">{{ person.fullName }}</span>
+            <span class="text-sm text-surface-500">{{ person.identification }}</span>
+          </div>
+        </ng-template>
+      </p-autocomplete>
+    </div>
+    <div class="flex gap-4">
+      <div class="flex flex-col gap-1 flex-1">
+        <label class="font-medium text-sm">Fecha inicio <span class="text-red-500">*</span></label>
+        <p-datepicker formControlName="startDate" [showTime]="true" [showSeconds]="false" dateFormat="dd/mm/yy"
+          class="w-full" placeholder="Fecha y hora de inicio" appendTo="body"
+          (onSelect)="onStartDateSelect($event)" />
+      </div>
+      <div class="flex flex-col gap-1 flex-1">
+        <label class="font-medium text-sm">Fecha fin <span class="text-red-500">*</span></label>
+        <p-datepicker formControlName="endDate" [showTime]="true" [showSeconds]="false" dateFormat="dd/mm/yy"
+          class="w-full" placeholder="Fecha y hora de fin" appendTo="body" />
+      </div>
+    </div>
+    <div class="flex flex-col gap-1">
+      <label class="font-medium text-sm">Notas</label>
+      <textarea pTextarea formControlName="notes" rows="3" placeholder="Observaciones..." class="w-full"></textarea>
+    </div>
+    }
+  </form>
+  <ng-template #footer>
+    <p-button label="Cancelar" severity="secondary" [outlined]="true" (onClick)="dialogVisible.set(false)" />
+    <p-button label="Guardar" [loading]="savingAppointment()"
+      [disabled]="appointmentForm.invalid || loadingDialogData()" (onClick)="onSaveAppointment()" />
+  </ng-template>
+</p-dialog>

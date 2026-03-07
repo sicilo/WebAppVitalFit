@@ -142,6 +142,22 @@ export const API_ENDPOINTS = {
     delete: '/api/masters/room-type/delete',
   },
 
+  // Clinic - Appointment
+  appointment: {
+    create: '/api/clinic/appointment/create',
+    update: '/api/clinic/appointment/update',
+    delete: '/api/clinic/appointment/delete',
+  },
+
+  // Clinic - Room
+  room: {
+    getPaged: '/api/clinic/room/get-paged',
+    getById: '/api/clinic/room/get-by-id',
+    create: '/api/clinic/room/create',
+    update: '/api/clinic/room/update',
+    delete: '/api/clinic/room/delete',
+  },
+
   serviceOrder: {
     getPaged: '/api/clinic/service-order/get-paged',
     getById: '/api/clinic/service-order/get-by-id', // ?Id={id} | ?Consecutive={consecutive}

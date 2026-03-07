@@ -7,6 +7,7 @@ import { GenderMasterView } from '../../views/gender-master/gender-master.view';
 import { JobTitleMasterView } from '../../views/job-title-master/job-title-master.view';
 import { RoomTypeMasterView } from '../../views/room-type-master/room-type-master.view';
 import { ItemTypeMasterView } from '../../views/item-type-master/item-type-master.view';
+import { RoomMasterView } from '../../views/room-master/room-master.view';
 
 @Component({
   selector: 'app-general-masters',
@@ -19,6 +20,7 @@ import { ItemTypeMasterView } from '../../views/item-type-master/item-type-maste
     JobTitleMasterView,
     RoomTypeMasterView,
     ItemTypeMasterView,
+    RoomMasterView,
   ],
   templateUrl: './general-masters.page.html',
 })

@@ -16,9 +16,5 @@ export const AGENDA_ROUTES: Routes = [
     title: 'Calendario',
     loadComponent: () => import('./pages/calendar/calendar.page').then(m => m.CalendarPage),
   },
-  {
-    path: 'sales',
-    title: 'Ventas',
-    loadComponent: () => import('./pages/sales/sales.page').then(m => m.SalesPage),
-  },
+
 ];

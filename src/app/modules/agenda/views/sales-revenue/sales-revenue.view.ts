@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { forkJoin } from 'rxjs';
@@ -52,8 +52,6 @@ export class SalesRevenueView implements OnInit {
   private readonly itemService = inject(ItemService);
   private readonly serviceOrderService = inject(ServiceOrderService);
 
-  readonly orderToLoad = input<{ consecutive: number; ts: number } | null>(null);
-
   protected readonly loadingData = signal(false);
   protected readonly saving = signal(false);
 
@@ -63,16 +61,6 @@ export class SalesRevenueView implements OnInit {
   protected personSuggestions: PersonOption[] = [];
   protected sourceItems: SalesPickListItem[] = [];
   protected targetItems: SalesPickListItem[] = [];
-
-  constructor() {
-    effect(() => {
-      const selection = this.orderToLoad();
-      if (selection !== null) {
-        this.consecutive = selection.consecutive;
-        this.loadByConsecutive();
-      }
-    });
-  }
 
   ngOnInit(): void {
     this.loadSourceData();
@@ -128,17 +116,17 @@ export class SalesRevenueView implements OnInit {
           this.loadedOrderId = order.id;
           this.selectedPerson = {
             id: order.customerId,
-            displayName: `${order.customerNames} ${order.customerSurnames}`,
-            identification: '',
+            displayName: order.customerFullName,
+            identification: order.customerIdentification,
           };
-          const loadedItems: SalesPickListItem[] = order.items.map((item) => ({
-            id: item.itemId,
-            name: item.itemName,
-            description: '',
-            price: item.price,
+          const loadedItems: SalesPickListItem[] = [{
+            id: order.orderServiceId,
+            name: order.orderServiceName,
+            description: `${order.orderServiceDuration} - ${order.orderServiceValidity}`,
+            price: order.orderPrice,
             type: 'item' as const,
-            number: item.number,
-          }));
+            number: order.orderServiceSessions,
+          }];
           this.sourceItems = this.sourceItems.filter(
             (si) => !loadedItems.some((li) => li.id === si.id)
           );
@@ -155,10 +143,9 @@ export class SalesRevenueView implements OnInit {
   }
 
   searchPersons(event: AutoCompleteCompleteEvent): void {
-    this.personService.getPaged({ page: 1, itemsPerPage: 20, search: event.query }).subscribe({
+    this.personService.getPaged({ page: 1, itemsPerPage: 20, search: event.query, isClient: true }).subscribe({
       next: (response) => {
         this.personSuggestions = (response.value?.items ?? [])
-          .filter((p) => p.isClient)
           .map((p) => ({
             id: p.id,
             displayName: `${p.names} ${p.surnames}`,
@@ -183,7 +170,7 @@ export class SalesRevenueView implements OnInit {
               id: bi.itemId,
               name: bi.itemName,
               description: bi.itemDescription,
-              price: this.sourceItems.find((si) => si.id === bi.itemId)?.price ?? 0,
+              price: bi.itemPrice,
               type: 'item' as const,
               itemTypeName: bi.itemTypeName,
               number: bi.itemAmount || 1,
@@ -206,10 +193,6 @@ export class SalesRevenueView implements OnInit {
   }
 
   onSave(): void {
-    if (!this.consecutive) {
-      this.toastService.error('Debe ingresar el consecutivo');
-      return;
-    }
     if (!this.selectedPerson) {
       this.toastService.error('Debe seleccionar un cliente');
       return;
@@ -223,12 +206,13 @@ export class SalesRevenueView implements OnInit {
     this.serviceOrderService
       .create({
         customerId: this.selectedPerson.id,
-        consecutive: this.consecutive,
+        ...(this.consecutive !== null ? { consecutive: this.consecutive } : {}),
         price: this.totalPrice,
         items: this.targetItems.map((item) => ({
           itemId: item.id,
           number: item.number,
           price: item.price,
+          isService: item.itemTypeName === 'Servicio',
         })),
       })
       .subscribe({
@@ -249,18 +233,19 @@ export class SalesRevenueView implements OnInit {
   }
 
   onUpdate(): void {
-    if (!this.loadedOrderId || !this.consecutive) return;
+    if (!this.loadedOrderId) return;
 
     this.saving.set(true);
     this.serviceOrderService
       .update({
         id: this.loadedOrderId,
-        consecutive: this.consecutive,
+        ...(this.consecutive !== null ? { consecutive: this.consecutive } : {}),
         price: this.totalPrice,
         items: this.targetItems.map((item) => ({
           itemId: item.id,
           number: item.number,
           price: item.price,
+          isService: item.itemTypeName === 'Servicio',
         })),
       })
       .subscribe({
