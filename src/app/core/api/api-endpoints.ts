@@ -144,6 +144,9 @@ export const API_ENDPOINTS = {
 
   // Clinic - Appointment
   appointment: {
+    getPaged: '/api/clinic/appointment/get-paged',
+    getFilteredBy: '/api/clinic/appointment/get/filtered-by',
+    getById: '/api/clinic/appointment/get-by-id',
     create: '/api/clinic/appointment/create',
     update: '/api/clinic/appointment/update',
     delete: '/api/clinic/appointment/delete',

@@ -1,3 +1,24 @@
-<div>
-  <h1>Calendar</h1>
-</div>
+<p-tabs [value]="activeTab()" (valueChange)="onTabChange($event)">
+  <p-tablist>
+    <p-tab value="personal">Por profesional</p-tab>
+    <p-tab value="resources">Por Profesionales</p-tab>
+    <p-tab value="room">Por Cabina</p-tab>
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="personal">
+      @if (activeTab() === 'personal') {
+        <app-calendar-personal />
+      }
+    </p-tabpanel>
+    <p-tabpanel value="resources">
+      @if (activeTab() === 'resources') {
+        <app-calendar-professional />
+      }
+    </p-tabpanel>
+    <p-tabpanel value="room">
+      @if (activeTab() === 'room') {
+        <app-calendar-room />
+      }
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>

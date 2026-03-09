@@ -1,3 +1,5 @@
+import { PagedResult } from "./api.model";
+
 export interface AppointmentBody {
     id: string;
     roomId: string;
@@ -39,4 +41,13 @@ export interface UpdateAppointmentBodyRequest {
     notes: string;
 }
 
+export interface GetFilteredAppointmentsRequest {
+  professionalName?: string;
+  patientName?: string;
+  professionalIdentification?: string;
+  patientIdentification?: string;
+  roomName?: string;
+}
 
+export interface AppointmentBodyPagedResult extends PagedResult<AppointmentBody> {
+}
