@@ -7,23 +7,16 @@ import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
-import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
-import { ButtonModule } from 'primeng/button';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { PersonService } from '../../../../core/services/person.service';
 import { AppointmentService } from '../../../../core/services/appointment.service';
 import { ToastService } from '../../../../core/services/toast.service';
 import { Person } from '../../../../core/models/person.model';
 
-interface ProfessionalOption {
-  id: string;
-  displayName: string;
-  identification: string;
-}
-
 @Component({
   selector: 'app-calendar-professional',
   standalone: true,
-  imports: [FormsModule, FullCalendarModule, AutoCompleteModule, ButtonModule],
+  imports: [FormsModule, FullCalendarModule, MultiSelectModule],
   templateUrl: './calendar-professional.view.html',
 })
 export class CalendarProfessionalView implements OnInit {
@@ -31,11 +24,11 @@ export class CalendarProfessionalView implements OnInit {
   private readonly appointmentService = inject(AppointmentService);
   private readonly toastService = inject(ToastService);
 
-  protected selectedProfessional: ProfessionalOption | null = null;
-  protected professionalSuggestions: ProfessionalOption[] = [];
+  protected allProfessionals: Person[] = [];
+  protected selectedProfessionals: Person[] = [];
   protected loading = signal(false);
+  protected showCalendar = signal(false);
 
-  private allProfessionals: Person[] = [];
   private allEvents: EventInput[] = [];
 
   protected calendarOptions = signal<CalendarOptions>({
@@ -87,7 +80,6 @@ export class CalendarProfessionalView implements OnInit {
                 notes: appt.notes,
               },
             }));
-            this.applyFilter(null);
           },
           error: () => {
             this.loading.set(false);
@@ -102,43 +94,27 @@ export class CalendarProfessionalView implements OnInit {
     });
   }
 
-  searchProfessionals(event: AutoCompleteCompleteEvent): void {
-    this.personService
-      .getPaged({ page: 1, itemsPerPage: 20, search: event.query, isEmployee: true })
-      .subscribe({
-        next: (response) => {
-          this.professionalSuggestions = (response.value?.items ?? []).map((p) => ({
-            id: p.id,
-            displayName: `${p.names} ${p.surnames}`,
-            identification: p.identification,
-          }));
-        },
-      });
-  }
+  onSelectionChange(): void {
+    if (!this.selectedProfessionals || this.selectedProfessionals.length === 0) {
+      this.showCalendar.set(false);
+      return;
+    }
 
-  onProfessionalSelect(): void {
-    this.applyFilter(this.selectedProfessional);
-  }
+    const selectedIds = new Set(this.selectedProfessionals.map((p) => p.id));
 
-  onClearFilter(): void {
-    this.selectedProfessional = null;
-    this.applyFilter(null);
-  }
-
-  private applyFilter(professional: ProfessionalOption | null): void {
-    const professionals = professional
-      ? this.allProfessionals.filter((p) => p.id === professional.id)
-      : this.allProfessionals;
-
-    const resources: ResourceInput[] = professionals.map((p) => ({
+    const resources: ResourceInput[] = this.selectedProfessionals.map((p) => ({
       id: p.id,
       title: `${p.names} ${p.surnames}`,
     }));
 
-    const events = professional
-      ? this.allEvents.filter((e) => e['resourceId'] === professional.id)
-      : this.allEvents;
+    const events = this.allEvents.filter((e) => selectedIds.has(e['resourceId'] as string));
 
     this.calendarOptions.update((opts) => ({ ...opts, resources, events }));
+    this.showCalendar.set(true);
+  }
+
+  onClear(): void {
+    this.selectedProfessionals = [];
+    this.showCalendar.set(false);
   }
 }

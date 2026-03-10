@@ -7,23 +7,16 @@ import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
-import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
-import { ButtonModule } from 'primeng/button';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { RoomService } from '../../../../core/services/room.service';
 import { AppointmentService } from '../../../../core/services/appointment.service';
 import { ToastService } from '../../../../core/services/toast.service';
 import { Room } from '../../../../core/models/room.model';
 
-interface RoomOption {
-  id: string;
-  name: string;
-  roomTypeName: string;
-}
-
 @Component({
   selector: 'app-calendar-room',
   standalone: true,
-  imports: [FormsModule, FullCalendarModule, AutoCompleteModule, ButtonModule],
+  imports: [FormsModule, FullCalendarModule, MultiSelectModule],
   templateUrl: './calendar-room.view.html',
 })
 export class CalendarRoomView implements OnInit {
@@ -31,11 +24,11 @@ export class CalendarRoomView implements OnInit {
   private readonly appointmentService = inject(AppointmentService);
   private readonly toastService = inject(ToastService);
 
-  protected selectedRoom: RoomOption | null = null;
-  protected roomSuggestions: RoomOption[] = [];
+  protected allRooms: Room[] = [];
+  protected selectedRooms: Room[] = [];
   protected loading = signal(false);
+  protected showCalendar = signal(false);
 
-  private allRooms: Room[] = [];
   private allEvents: EventInput[] = [];
 
   protected calendarOptions = signal<CalendarOptions>({
@@ -87,7 +80,6 @@ export class CalendarRoomView implements OnInit {
                 notes: appt.notes,
               },
             }));
-            this.applyFilter(null);
           },
           error: () => {
             this.loading.set(false);
@@ -102,41 +94,27 @@ export class CalendarRoomView implements OnInit {
     });
   }
 
-  searchRooms(event: AutoCompleteCompleteEvent): void {
-    this.roomService.getPaged({ page: 1, itemsPerPage: 20, search: event.query }).subscribe({
-      next: (response) => {
-        this.roomSuggestions = (response.value?.items ?? []).map((r) => ({
-          id: r.id,
-          name: r.name,
-          roomTypeName: r.roomTypeName,
-        }));
-      },
-    });
+  onRoomClear(): void {
+    this.selectedRooms = [];
+    this.showCalendar.set(false);
   }
 
-  onRoomSelect(): void {
-    this.applyFilter(this.selectedRoom);
-  }
+  onRoomSelectionChange(): void {
+    if (!this.selectedRooms || this.selectedRooms.length === 0) {
+      this.showCalendar.set(false);
+      return;
+    }
 
-  onClearFilter(): void {
-    this.selectedRoom = null;
-    this.applyFilter(null);
-  }
+    const selectedIds = new Set(this.selectedRooms.map((r) => r.id));
 
-  private applyFilter(room: RoomOption | null): void {
-    const rooms = room
-      ? this.allRooms.filter((r) => r.id === room.id)
-      : this.allRooms;
-
-    const resources: ResourceInput[] = rooms.map((r) => ({
+    const resources: ResourceInput[] = this.selectedRooms.map((r) => ({
       id: r.id,
       title: r.name,
     }));
 
-    const events = room
-      ? this.allEvents.filter((e) => e['resourceId'] === room.id)
-      : this.allEvents;
+    const events = this.allEvents.filter((e) => selectedIds.has(e['resourceId'] as string));
 
     this.calendarOptions.update((opts) => ({ ...opts, resources, events }));
+    this.showCalendar.set(true);
   }
 }

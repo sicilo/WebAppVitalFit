@@ -1,36 +1,35 @@
 <div class="flex flex-col gap-4">
   <div class="flex items-center gap-4">
-    <label class="font-medium">Sala</label>
-    <p-autocomplete
-      [(ngModel)]="selectedRoom"
-      [suggestions]="roomSuggestions"
-      (completeMethod)="searchRooms($event)"
-      (onSelect)="onRoomSelect()"
+    <label class="font-medium">Cabinas</label>
+    <p-multiselect
+      [(ngModel)]="selectedRooms"
+      [options]="allRooms"
       optionLabel="name"
-      [forceSelection]="true"
-      placeholder="Filtrar por sala..."
-      class="w-80"
+      placeholder="Seleccionar cabinas..."
+      [showClear]="true"
+      [filter]="true"
+      filterPlaceholder="Buscar cabina..."
+      class="w-96"
+      (onChange)="onRoomSelectionChange()"
+      (onClear)="onRoomClear()"
     >
-      <ng-template #option let-room>
+      <ng-template #item let-room>
         <div class="flex flex-col">
           <span class="font-medium">{{ room.name }}</span>
           <small class="text-surface-500">{{ room.roomTypeName }}</small>
         </div>
       </ng-template>
-    </p-autocomplete>
-    @if (selectedRoom) {
-      <p-button
-        label="Ver todas"
-        severity="secondary"
-        [outlined]="true"
-        size="small"
-        (onClick)="onClearFilter()"
-      />
-    }
+    </p-multiselect>
     @if (loading()) {
       <span class="text-sm text-gray-500">Cargando...</span>
     }
   </div>
 
-  <full-calendar [options]="calendarOptions()" />
+  @if (showCalendar()) {
+    <full-calendar [options]="calendarOptions()" />
+  } @else {
+    <div class="flex items-center justify-center h-64 text-gray-400 text-sm">
+      Selecciona al menos una cabina para ver el calendario.
+    </div>
+  }
 </div>
