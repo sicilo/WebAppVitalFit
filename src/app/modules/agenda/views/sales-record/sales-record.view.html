@@ -61,7 +61,11 @@
           </div>
         </td>
         <td>
-          <p-button [rounded]="true" [text]="true" severity="secondary" pTooltip="Agendar cita" tooltipPosition="left"
+          <p-button 
+          [rounded]="true" 
+          [text]="true" 
+          severity="secondary" pTooltip="Agendar cita" tooltipPosition="left"
+          [disabled]="order.totalTakenSessions >= order.totalServiceSessions || !isOrderActive(order)"
             (onClick)="openAppointmentDialog(order)">
             <ng-template #icon>
               <span class="material-symbols-outlined">calendar_add_on</span>

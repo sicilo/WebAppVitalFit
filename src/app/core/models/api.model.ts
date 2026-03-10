@@ -1,6 +1,7 @@
 export interface ApplicationResult<T> {
   value: T | null;
   error: ResultError | null;
+  advisories?: string[];
 }
 
 export interface ResultError {

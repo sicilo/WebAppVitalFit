@@ -8,6 +8,8 @@ import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
 import { RoomService } from '../../../../core/services/room.service';
 import { AppointmentService } from '../../../../core/services/appointment.service';
 import { ToastService } from '../../../../core/services/toast.service';
@@ -16,7 +18,7 @@ import { Room } from '../../../../core/models/room.model';
 @Component({
   selector: 'app-calendar-room',
   standalone: true,
-  imports: [FormsModule, FullCalendarModule, MultiSelectModule],
+  imports: [FormsModule, FullCalendarModule, MultiSelectModule, ButtonModule, TooltipModule],
   templateUrl: './calendar-room.view.html',
 })
 export class CalendarRoomView implements OnInit {
@@ -64,34 +66,44 @@ export class CalendarRoomView implements OnInit {
     this.roomService.getPaged({ page: 1, itemsPerPage: 200 }).subscribe({
       next: (roomsResponse) => {
         this.allRooms = roomsResponse.value?.items ?? [];
-        this.appointmentService.getFilteredBy({}).subscribe({
-          next: (apptResponse) => {
-            this.loading.set(false);
-            this.allEvents = (apptResponse.value ?? []).map((appt) => ({
-              id: appt.id,
-              resourceId: appt.roomId,
-              title: `${appt.professionalFullName} — ${appt.patientFullName}`,
-              start: appt.startDate,
-              end: appt.endDate,
-              extendedProps: {
-                professionalFullName: appt.professionalFullName,
-                patientFullName: appt.patientFullName,
-                companionFullName: appt.companionFullName,
-                notes: appt.notes,
-              },
-            }));
-          },
-          error: () => {
-            this.loading.set(false);
-            this.toastService.error('Error al cargar las citas');
-          },
-        });
+        this.loadAppointments();
       },
       error: () => {
         this.loading.set(false);
         this.toastService.error('Error al cargar las salas');
       },
     });
+  }
+
+  private loadAppointments(): void {
+    this.loading.set(true);
+    this.appointmentService.getFilteredBy({}).subscribe({
+      next: (apptResponse) => {
+        this.loading.set(false);
+        this.allEvents = (apptResponse.value ?? []).map((appt) => ({
+          id: appt.id,
+          resourceId: appt.roomId,
+          title: `${appt.professionalFullName} — ${appt.patientFullName}`,
+          start: appt.startDate,
+          end: appt.endDate,
+          extendedProps: {
+            professionalFullName: appt.professionalFullName,
+            patientFullName: appt.patientFullName,
+            companionFullName: appt.companionFullName,
+            notes: appt.notes,
+          },
+        }));
+        if (this.selectedRooms.length > 0) this.onRoomSelectionChange();
+      },
+      error: () => {
+        this.loading.set(false);
+        this.toastService.error('Error al cargar las citas');
+      },
+    });
+  }
+
+  reloadAppointments(): void {
+    this.loadAppointments();
   }
 
   onRoomClear(): void {

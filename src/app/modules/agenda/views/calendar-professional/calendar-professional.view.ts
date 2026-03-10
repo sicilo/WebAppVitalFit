@@ -8,6 +8,8 @@ import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
 import { PersonService } from '../../../../core/services/person.service';
 import { AppointmentService } from '../../../../core/services/appointment.service';
 import { ToastService } from '../../../../core/services/toast.service';
@@ -16,7 +18,7 @@ import { Person } from '../../../../core/models/person.model';
 @Component({
   selector: 'app-calendar-professional',
   standalone: true,
-  imports: [FormsModule, FullCalendarModule, MultiSelectModule],
+  imports: [FormsModule, FullCalendarModule, MultiSelectModule, ButtonModule, TooltipModule],
   templateUrl: './calendar-professional.view.html',
 })
 export class CalendarProfessionalView implements OnInit {
@@ -64,34 +66,44 @@ export class CalendarProfessionalView implements OnInit {
     this.personService.getPaged({ page: 1, itemsPerPage: 200, isEmployee: true }).subscribe({
       next: (personsResponse) => {
         this.allProfessionals = personsResponse.value?.items ?? [];
-        this.appointmentService.getFilteredBy({}).subscribe({
-          next: (apptResponse) => {
-            this.loading.set(false);
-            this.allEvents = (apptResponse.value ?? []).map((appt) => ({
-              id: appt.id,
-              resourceId: appt.professionalId,
-              title: appt.patientFullName,
-              start: appt.startDate,
-              end: appt.endDate,
-              extendedProps: {
-                patientFullName: appt.patientFullName,
-                roomName: appt.roomName,
-                companionFullName: appt.companionFullName,
-                notes: appt.notes,
-              },
-            }));
-          },
-          error: () => {
-            this.loading.set(false);
-            this.toastService.error('Error al cargar las citas');
-          },
-        });
+        this.loadAppointments();
       },
       error: () => {
         this.loading.set(false);
         this.toastService.error('Error al cargar los profesionales');
       },
     });
+  }
+
+  private loadAppointments(): void {
+    this.loading.set(true);
+    this.appointmentService.getFilteredBy({}).subscribe({
+      next: (apptResponse) => {
+        this.loading.set(false);
+        this.allEvents = (apptResponse.value ?? []).map((appt) => ({
+          id: appt.id,
+          resourceId: appt.professionalId,
+          title: appt.patientFullName,
+          start: appt.startDate,
+          end: appt.endDate,
+          extendedProps: {
+            patientFullName: appt.patientFullName,
+            roomName: appt.roomName,
+            companionFullName: appt.companionFullName,
+            notes: appt.notes,
+          },
+        }));
+        if (this.selectedProfessionals.length > 0) this.onSelectionChange();
+      },
+      error: () => {
+        this.loading.set(false);
+        this.toastService.error('Error al cargar las citas');
+      },
+    });
+  }
+
+  reloadAppointments(): void {
+    this.loadAppointments();
   }
 
   onSelectionChange(): void {

@@ -19,7 +19,19 @@
         }
       </ng-template>
     </p-multiselect>
-    @if (loading()) {
+    @if (showCalendar()) {
+    <p-button
+      [rounded]="true"
+      [text]="true"
+      severity="secondary"
+      pTooltip="Recargar citas"
+      tooltipPosition="right"
+      [loading]="loading()"
+      (onClick)="reloadAppointments()"
+    >
+      <span class="material-symbols-outlined" style="font-size: 1.25rem;">refresh</span>
+    </p-button>
+    } @else if (loading()) {
     <span class="text-sm text-gray-500">Cargando...</span>
     }
   </div>

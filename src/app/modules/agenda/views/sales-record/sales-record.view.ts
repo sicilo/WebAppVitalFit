@@ -122,7 +122,11 @@ export class SalesRecordView implements OnInit {
     this.selectedProfessional = null;
     this.selectedCompanion = null;
     this.selectedPatient = { id: order.customerId, fullName: order.customerFullName, identification: order.customerIdentification } as PersonOption;
-    this.appointmentForm.patchValue({ patientId: order.customerId });
+    this.selectedCompanion = { id: order.customerId, fullName: order.customerFullName, identification: order.customerIdentification } as PersonOption;
+    this.appointmentForm.patchValue({
+      patientId: order.customerId,
+      companionId: order.customerId,
+    });
     this.dialogVisible.set(true);
     this.roomService.getPaged({ page: 1, itemsPerPage: 200 }).subscribe({
       next: (response) => {
@@ -213,6 +217,7 @@ export class SalesRecordView implements OnInit {
           this.toastService.success('Cita creada correctamente');
           this.dialogVisible.set(false);
         }
+        response.advisories?.forEach((msg) => this.toastService.warn(msg, 'Advertencia'));
       },
       error: () => {
         this.savingAppointment.set(false);
